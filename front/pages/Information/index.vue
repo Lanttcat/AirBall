@@ -1,10 +1,7 @@
 <template>
-    <v-container
-        id="myContainer"
-        fluid
-        grid-list-lg>
+    <div id="myContainer">
         <player></player>
-    </v-container>
+    </div>
 </template>
 <script>
 import player from './player/index.vue'

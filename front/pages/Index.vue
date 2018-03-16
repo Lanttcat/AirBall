@@ -35,8 +35,8 @@
             <v-layout row class="card-item">
                 <v-flex xs7>
                   <div style="text-align: left">
-                    <div class="headline" @click="TurnToArticle('11')">恩比德对位分析，该怎么限制</div>
-                    <div>两天的时间在济南其实足够了，并且冬天济南</div>
+                    <div class="subheading" @click="TurnToArticle('11')">恩比德对位分析，该怎么限制</div>
+                    <!-- <div>两天的时间在济南其实足够了，并且冬天济南</div> -->
                     <v-chip outline color="red">
                         <!-- <v-icon left>label</v-icon> -->
                         去处
@@ -49,7 +49,7 @@
                 </v-flex>
                 <v-flex xs5>
                     <v-card-media
-                      src="../static/img/testimg/1.JPG"
+                      src="../../static/img/testimg/default.jpg"
                       height="8rem"
                       contain
                     ></v-card-media>
@@ -70,7 +70,7 @@ import {mapActions} from 'vuex';
 function setState(store) {
     store.dispatch('appShell/appHeader/setAppHeader', {
         isShowHeader: true,
-        title: '茶途',
+        title: 'AirBall篮球社区',
         isShowInputSearch: true,
         isShowBtnSearch: true,
         leftBtn: {
@@ -219,3 +219,9 @@ export default {
 .app-shell-header
     color white
 </style>
+<style>
+#app .chip .chip__content{
+    height: 24px;
+}
+</style>
+

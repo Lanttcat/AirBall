@@ -5,7 +5,7 @@
             size="60px"
             slot="activator">
             <img
-                src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+                :src="titles.avatar"
                 alt="">
         </v-avatar>
     </v-flex>

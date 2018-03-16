@@ -24,7 +24,7 @@
                 v-if="isShowInputSearch"
                 class="app-header-middle" v-cloak>
                 <slot name="title">
-                    <input @click.native="handleClick('action', {actionIdx, route: action.route})" class="app-header-search" placeholder="搜索景点/攻略等" type="text">
+                    <input @click.native="handleClick('action', {actionIdx, route: action.route})" class="app-header-search" placeholder="搜索球员或咨询等" type="text">
                 </slot>
             </div>
             <div
@@ -34,7 +34,7 @@
                     <v-btn
                         icon="icon"
                         @click.native="handleClick('action')">
-                        <v-icon color="grey darken-4" class="app-header-icon">search</v-icon>
+                        <v-icon color="light-green darken-4" class="app-header-icon">search</v-icon>
                     </v-btn>
                 </slot>
             </div>
@@ -127,7 +127,7 @@ $btn-color = #fff
         font-size 1.2em
         .app-header-search
             padding 0.7rem 2rem
-            border 1px solid rgb(75, 75, 75);
+            border 1px solid #c0d36f;
             border-radius 2px
             height 2.5rem
             width 100%
@@ -140,7 +140,7 @@ $btn-color = #fff
     .app-header-logo
         margin 0 0.5rem
         color $btn-color
-        width 52px
+        width 40px
 
     .app-header-icon
         color $btn-color
