@@ -24,15 +24,15 @@ module.exports = {
             }
         ],
         // 默认配置，启动 localhost:8888 服务器展示网页
-        bundleAnalyzerReport: false,
+        // bundleAnalyzerReport: false,
 
-        // 自定义配置
-        bundleAnalyzerReport: {
-            analyzerMode: 'server',
-            analyzerHost: '127.0.0.1',
-            analyzerPort: 8888,
-            // 省略其他配置
-        },
+        // // 自定义配置
+        // bundleAnalyzerReport: {
+        //     analyzerMode: 'server',
+        //     analyzerHost: '127.0.0.1',
+        //     analyzerPort: 8888,
+        //     // 省略其他配置
+        // },
         /**
          * alias for webpack
          *
@@ -50,7 +50,21 @@ module.exports = {
          */
         nodeExternalsWhitelist: [
             /iscroll/
-        ]
+        ],
+        // extend(config, {type, env}) {
+        //     // 在客户端和服务端同时生效，等同于 type === 'client' || type === 'server'
+        //     if (type === 'base') {
+        //         config.devServer = {
+        //             disableHostCheck: true,
+        //             host: '0.0.0.0',
+        //             port: 8080
+        //         };
+        //         console.log(config);
+        //         // devServer.push({
+        //         //     host: '0.0.0.0'
+        //         // });
+        //     }
+        // }
     },
     router: {
         mode: 'history',
@@ -82,5 +96,8 @@ module.exports = {
         ],
         appshellUrl: '/appshell',
         dontCacheBustUrlsMatching: /\.\w{8}\./
+    },
+    extend(config) {
+        console.log(config);
     }
 };
