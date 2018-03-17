@@ -1,10 +1,12 @@
 <template>
     <div>
         <loacl-header></loacl-header>
+        <v-layout class="game-card-wrap">
+            <game-card></game-card>
+        </v-layout>
         <v-container grid-list-md text-xs-center class="home-feed">
-            <h2 style="text-align: left">比赛列表</h2>
             <!-- 一般三到四个 -->
-            <v-layout
+            <!-- <v-layout
                 v-for="item in ssList"
                 :key="item._id"
                 row
@@ -30,7 +32,7 @@
                         <span>{{ item.zanNumber }}</span>
                     </div>
                 </v-flex>
-            </v-layout>
+            </v-layout> -->
             <h2 style="text-align: left">社区办公室</h2>
             <v-layout row class="card-item">
                 <v-flex xs7>
@@ -65,6 +67,7 @@
 
 <script>
 import loaclHeader from '../components/LocalBanner'
+import gameCard from '../components/gameCard'
 
 import {mapActions} from 'vuex';
 function setState(store) {
@@ -108,6 +111,10 @@ export default {
             ]
         }
     },
+    components: {
+        'loacl-header': loaclHeader,
+        'game-card': gameCard
+    },
     metaInfo: {
         title: 'Home',
         titleTemplate: '%s - Lavas',
@@ -123,27 +130,24 @@ export default {
         setState(this.$store);
     },
     created() {
-        this.$http.get("/api/scenicspot", {
-            params: {
-                num: 3
-            }
-        }).then(
-            ({data}) => {
-                console.log(data);
-                if (data.data.status) {
-                    this.ssList = data.data.data;
-                    console.log(this.status)
-                    console.log(data);
-                    // this.setMsgTip({msgSwitch: true, msgText: '验证码发送成功'});
-                }
-                else {
-                    // this.setMsgTip({msgSwitch: true, msgText: '获取列表失败'});
-                }
-            }
-        );
-    },
-    components: {
-        'loacl-header': loaclHeader
+        // this.$http.get("/api/scenicspot", {
+        //     params: {
+        //         num: 3
+        //     }
+        // }).then(
+        //     ({data}) => {
+        //         console.log(data);
+        //         if (data.data.status) {
+        //             this.ssList = data.data.data;
+        //             console.log(this.status)
+        //             console.log(data);
+        //             // this.setMsgTip({msgSwitch: true, msgText: '验证码发送成功'});
+        //         }
+        //         else {
+        //             // this.setMsgTip({msgSwitch: true, msgText: '获取列表失败'});
+        //         }
+        //     }
+        // );
     },
     methods: {
         getSSList: () => {
@@ -214,10 +218,17 @@ export default {
     height 200px
 
 // 替换header
-#app .app-view.app-view-with-header
-    top 0
-.app-shell-header
-    color white
+#app 
+    .app-view.app-view-with-header
+        top 0
+
+    .app-shell-header
+        color white
+
+    .game-card-wrap
+        padding 8px
+        border-radius 3px
+        background #E8F5E9
 </style>
 <style>
 #app .chip .chip__content{
