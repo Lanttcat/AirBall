@@ -1,0 +1,45 @@
+@startuml
+
+: 点击文章;
+
+if (创作者本人) then (Yes)
+    : 点击喜欢;
+stop
+else 
+    fork
+        : 喜欢;
+        note
+            点击喜欢的时候做三件事：
+            1. 五秒内不允许重复点击
+            2. 发送用户行为数据，写入用户记录
+            3. 声望系统添加
+        end note
+    fork again
+        : 踩;
+        note
+            同喜欢
+        end note
+    fork again
+        : 举报;
+        : 填写举报理由;
+        note right
+            需要审核，暂时不做
+        end note
+    fork again
+        : tag;
+        : 跳转相关页面;
+        note right
+            需要审核，暂时不做
+        end note
+    fork again
+        if (非第一次评论) then (Yes)
+            : 评论;
+        else (No)
+            : 评论测试;
+        endif
+    end fork
+endif
+stop
+@enduml
+basic diagram activity
+Start/Stop
