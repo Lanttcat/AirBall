@@ -16,8 +16,7 @@ const secret = 'oneStep_secret';
 
 // 用户相关---------------------------------------------------------------------------
 route.get('/api/user', async (ctx) => {
-    // let {query} = ctx;
-    // console.log(ctx.query)
+    // 验证码
     let phone = ctx.query.userPhone;
     console.log('输入的手机号：' + phone);
     try {
@@ -86,7 +85,7 @@ route.put('/api/user', async (ctx) => {
         }
 
         // 匹配密码是否相等
-        let flag = await oneBcrypt.comparePassword(body.userPassword, userInfo[0].upassword);
+        let flag = await oneBcrypt.comparePassword(body.userPassword, userInfo[0].password);
         if (flag) {
             delete userInfo[0].upassword;
             ctx.status = 200;
@@ -134,6 +133,7 @@ route.post('/api/comment', async (ctx) => {
     };
 });
 
+// 存文章
 route.post('/api/article', async (ctx) => {
     let {body} = ctx.request;
     let res = await article.addArticle(body);
@@ -172,4 +172,5 @@ route.get('/api/scenicspotList', async (ctx) => {
     };
 });
 
+// 插入文章
 module.exports = route;

@@ -4,7 +4,7 @@
 
 let mongo = require('mongoose');
 
-mongo.connect('mongodb://nikolan:123456@123.207.150.130:27017/oneStepDB');
+mongo.connect('mongodb://admin_lan:19951024lyxA@123.207.150.130:27017/airball_db');
 
 let Schema = mongo.Schema;
 
@@ -16,22 +16,25 @@ const msgStatusText = {
 
 // 定义Schema
 let articleSchema = new Schema({
-    articleId: Number,
-    articleContent: String,
-    userId: Number,
-    userName: String,
+    id: Number,
+    authorId: String,
+    content: String,
+    tags: [String],
+    status: Number,
     commentArray: [
         {
             userId: Number,
+            userName: String,
             parentNodeId: Number,
             parentNodeName: String,
             content: String,
-            commentCount: Number,
+            count: Number,
             zanCount: Number,
-            commentTme: Date
+            time: Date
         }
     ],
     creatTime: Date,
+    updateTime: Date,
     similarArticle: [
         {
             articleId: Number
@@ -67,9 +70,11 @@ let article = {
         // 文章发布操作
         let result = {};
         let newArticle = new Article({
-            userId: info.userId,
-            userName: info.userName,
-            articleContent: info.articleContent
+            authorId: info.authorId,
+            content: info.content,
+            tags: info.tags,
+            creatTime: (new Date().getTime()),
+            updateTime: (new Date().getTime())
         });
         try {
             let res = await newArticle.save();

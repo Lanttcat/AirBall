@@ -16,7 +16,7 @@ const dbConfig = {
         port: '3306',
         user: 'root',
         password: '19951024lyxA',
-        database: 'onestep_base'
+        database: 'airball_base'
     },
     dev: {
         connectionLimit: 10,
@@ -24,7 +24,7 @@ const dbConfig = {
         port: '3306',
         user: 'root',
         password: '19951024lyxA',
-        database: 'onestep_base'
+        database: 'airball_base'
     }
 };
 

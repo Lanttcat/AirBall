@@ -3,6 +3,7 @@
  */
 
 let query = require('../model/query');
+let crypto = require('crypto');  //加载crypto库
 
 /**
  * 云通信基础能力业务短信发送、查询详情。
@@ -23,9 +24,18 @@ function createCode() {
     return codeRandom;
 }
 
+function creatAid(phone) {
+    let content = phone + '' + (new Date().getTime());//加密的明文；
+    console.log(content);
+    let md5 = crypto.createHash('md5');//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
+    md5.update(content);
+    let aid = md5.digest('hex');  //加密后的值d
+    return aid
+}
 let user = {
     registration: async (body) => {
-        let sql = `INSERT INTO userbaseinfo (uname, uphone, upassword) VALUES ('${body.userPhone}', '${body.userPhone}', '${body.hashPassword}')`;
+        let aid = creatAid(body.userPhone);
+        let sql = `INSERT INTO userbaseinfo (aid, name, phone, password) VALUES ('${aid}', '${body.userPhone}', '${body.userPhone}', '${body.hashPassword}')`;
         try {
             let res = await query(sql);
             return res;
@@ -58,9 +68,9 @@ let user = {
         }
     },
     login: async (body) => {
-        let sql = `select uid, uphone, uname, uage, upassword, uIntro, uSite, uavatar 
+        let sql = `select aid, phone, name, password, intro, site, age, avatar, repu 
                 from userbaseinfo 
-                where uphone = '${body.userPhone}';`;
+                where phone = '${body.userPhone}';`;
         try {
             let res = await query(sql);
             return res;

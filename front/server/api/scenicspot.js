@@ -4,7 +4,7 @@
 
 let mongo = require('mongoose');
 
-mongo.connect('mongodb://nikolan:123456@123.207.150.130:27017/oneStepDB');
+mongo.connect('mongodb://nikolan:airball_test_bishe@123.207.150.130:27017/mo_airball');
 
 let Schema = mongo.Schema;
 
