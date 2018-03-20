@@ -107,11 +107,6 @@
 import storage from '../../lib/storage.js';
 import {mapState, mapMutations, mapActions} from 'vuex';
 
-function setState(store) {
-    store.dispatch("appShell/appHeader/setAppHeader", {
-        isShowHeader: false
-    });
-}
 export default {
     name: "login",
     data() {
@@ -136,15 +131,9 @@ export default {
             active: null
         };
     },
-    async asyncData({ store, route }) {
-        setState(store);
-    },
-    activated() {
-        setState(this.$store);
-    },
     methods: {
         ...mapMutations('global', {
-            setMsgTip: 'SETMSGTIP'
+            setMsgTip: 'setMsgTip'
         }),
         ...mapActions('userStatus/userStatu', [
             'setUserInfo'
@@ -162,6 +151,7 @@ export default {
             return /^1[34578]\d{9}$/.test(value);
         },
         getVerifyCode() {
+            let that = this;
             // 获取验证码
             // 1. 验证手机号
             if (!this.verifyPhone(this.registerInfo.userPhone)) {
@@ -178,17 +168,18 @@ export default {
                 ({data}) => {
                     console.log(data);
                     if( parseInt(data.status) === 1 ) {
-                        this.code = data.data;
+                        that.code = data.data;
                         console.log(data);
-                        this.setMsgTip({msgSwitch: true, msgText: '验证码发送成功'});
+                        that.setMsgTip({msgSwitch: true, msgText: '验证码发送成功'});
                     }
                     else {
-                        this.setMsgTip({msgSwitch: true, msgText: '获取验证码失败，请稍后再试'});
+                        that.setMsgTip({msgSwitch: true, msgText: '获取验证码失败，请稍后再试'});
                     }
                 }
             );
         },
         userLoginControl() {
+            let that = this;
             if (!this.verifyPhone(this.loginInfo.userPhone)) {
                 this.alertStatusChange(true, this.errprTipInfo[2]);
                 return;
@@ -204,25 +195,26 @@ export default {
                     console.log(data);
                     if (data.status) {
                         // 将token写入localstorage
-                        storage.setItem('oneStep_token', data.token);
-                        this.setUserInfo(data.user);
+                        storage.setItem('airball_token', data.token);
+                        that.setUserInfo(data.user);
                         // 将消息同步到store
-                        this.setMsgTip({msgSwitch: true, msgText: data.message});
+                        that.setMsgTip({msgSwitch: true, msgText: data.message});
 
                         // 跳转到之前的页面
                         let AimPath = this.$route.query.redirect || '/';
                         this.$router.push(AimPath);
                     }
                     else {
-                        this.setMsgTip({msgSwitch: true, msgText: data.message});
+                        that.setMsgTip({msgSwitch: true, msgText: data.message});
                     }
                 }).catch((e) => {
                     console.log(e);
-                    this.setMsgTip({msgSwitch: true, msgText: '服务器错误'});
+                    that.setMsgTip({msgSwitch: true, msgText: '服务器错误'});
                 })
         },
         userRegisterControl() {
             // 检查验证码
+            let that = this;
             if (parseInt(this.registerInfo.varifyCode) != parseInt(this.code)) {
                 this.setMsgTip({msgSwitch: true, msgText: '验证码错误'});
                 return;
@@ -239,17 +231,17 @@ export default {
                 function ({data}) {
                     console.log(data);
                     if (data.status) {
-                        this.setMsgTip({msgSwitch: true, msgText: '注册成功，请重新登录'});
+                        that.setMsgTip({msgSwitch: true, msgText: '注册成功，请重新登录'});
                         // 切换到登录界面
-                        this.active = 0;
+                        that.active = 0;
                     }
                     else {
-                        this.setMsgTip({msgSwitch: true, msgText: '注册失败，请稍后再试'});
+                        that.setMsgTip({msgSwitch: true, msgText: '注册失败，请稍后再试'});
                     }
                     // 将数据同步到store
                 },
                 function (err) {
-                    this.setMsgTip({msgSwitch: true, msgText: '注册失败，请稍后再试'});
+                    that.setMsgTip({msgSwitch: true, msgText: '注册失败，请稍后再试'});
                 }
             );
         }

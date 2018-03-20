@@ -4,17 +4,37 @@
             <v-flex xs12>
                 <v-card>
                     <v-toolbar style="height:8vh" flat>
-                        <v-icon  class="app-header-icon">arrow_back</v-icon>
+                        <v-icon  class="app-header-icon" @click.native="$router.go(-1)">arrow_back</v-icon>
                         <v-toolbar-title>写攻略</v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-icon  class="app-header-icon">send</v-icon>
+                        <span class="add-btn" @click="review">预览</span>
+                        <span class="add-btn">保存</span>
+                        <v-bottom-sheet v-model="sheet">
+                            <v-btn slot="activator" color="purple" dark>发布</v-btn>
+                            <v-list>
+                                <v-subheader>至少添加两个标签</v-subheader>
+                                <div>
+                                    <v-chip v-for="item in tags" :key="item.id" @click="removeTag(item)" close>
+                                        {{ item }}
+                                    </v-chip>
+                                </div>
+                                
+                                <div>
+                                    <input type="text" class="tag-input" v-model="inputTag">
+                                    <v-btn depressed small @click="addTag">添加</v-btn>
+                                </div>
+                                <v-btn color="purple" dark @click="publish">发布</v-btn>
+                            </v-list>
+                        </v-bottom-sheet>
+                        <!-- <span class="add-btn" @click="publish">发布</span> -->
                     </v-toolbar>
-                    <v-container style="height:85vh" fluid class="pa-0 edit-container">
+                    <v-container style="height:92vh" fluid class="pa-0 edit-container">
                      
                             <v-flex xs12>
                                 <v-divider></v-divider>
                                 <v-text-field
                                 label="输入标题"
+                                v-model="title"
                                 single-line
                                 full-width
                                 hide-details
@@ -29,7 +49,7 @@
                                     @blur="onEditorBlur($event)"
                                     @focus="onEditorFocus($event)"
                                     @ready="onEditorReady($event)"
-                                    style="height:72vh">
+                                    style="height:75vh">
                                 </quill-editor>
                             </v-flex>
                   
@@ -46,12 +66,7 @@ import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 
 import { quillEditor } from "vue-quill-editor";
-// 状态栏设置
-function setState(store) {
-    store.dispatch('appShell/appHeader/setAppHeader', {
-        isShowHeader: false
-    });
-}
+import { mapState, mapMutations } from 'vuex' ;
 
 var toolbarOptions = [
     ["bold", "strike", "image"], // toggled buttons
@@ -62,39 +77,93 @@ var toolbarOptions = [
 ];
 
 export default {
+    name: 'edit',
     data() {
         return {
-        content: "<p></p>",
-        editorOption: {
-            modules: {
-            toolbar: toolbarOptions
+            title: '',
+            tags: [],
+            sheet: false,
+            inputTag: '',
+            content: "<p></p>",
+            editorOption: {
+                modules: {
+                    toolbar: toolbarOptions
+                }
             }
-        }
         };
     },
-    async asyncData({store, route}) {
-        setState(store);
-    },
-    activated() {
-        setState(this.$store);
-    },
-    mounted() {
-        console.log("this is current quill instance object", this.myQuillEditor);
+    computed: {
+        ...mapState('userStatus/userStatu', [
+            'userInfo'
+        ])
     },
     methods: {
+        ...mapMutations('global', [
+            'setMsgTip',
+            'shellStyle'
+        ]),
         onEditorBlur(editor) {
-        console.log("editor blur!", editor);
+            // console.log("editor blur!",  this.content);
         },
         onEditorFocus(editor) {
-        console.log("editor focus!", editor);
+            // console.log("editor focus!", this.content);
         },
         onEditorReady(editor) {
-        console.log("editor ready!", editor);
+        // console.log("editor ready!");
+        },
+        review() {
+            console.log(this.$router)
+            // 文章预览
+            this.$router.push({
+                name: 'editReview',
+                params: {
+                    title: 'ces',
+                    content: this.content
+                }
+            });
+        },
+        publish() {
+            this.$http.post("/api/article", {
+                title: this.title,
+                content: this.content,
+                tags: this.tags,
+                authorId: this.userInfo.aid
+            }).then(({data}) => {
+                    let info = data.data;
+                    if (info.status) {
+                        this.setMsgTip({msgSwitch: true, msgText: '发布成功！'});
+                        // 切换到登录界
+                    }
+                    else {
+                        this.setMsgTip({msgSwitch: true, msgText: '发布失败，请稍后再试'});
+                    }
+                    // 将数据同步到store
+                },
+                (err) => {
+                    this.setMsgTip({msgSwitch: true, msgText: '发布失败，请稍后再试'});
+                }
+            );
+        },
+        addTag() {
+            if (this.inputTag.length <= 1) {
+                return;
+            }
+            this.tags.push(this.inputTag);
+            this.inputTag = '';
+        },
+        removeTag(item) {
+            let set = new Set(this.tags);
+            set.delete(item);
+            this.tags = Array.from(set);
         }
     },
     components: {
         "quill-editor": quillEditor
-    }
+    },
+    async asyncData({ route }) {
+        // 获取文章草稿
+        console.log(route);
+    },
 };
 </script>
 <style lang="stylus" scoped>
@@ -127,8 +196,23 @@ $btn-color = #fff;
         .ql-toolbar
             border-left none 
             border-right none
-
-        .ql-editor
-            height  65vh
 </style>
+<style lang="stylus" scoped>
+    #app
+        .add-btn
+            display inline-block
+            padding 6px
+
+            &:last-child
+                font-size 1.1rem
+
+        .tag-input
+            display inline-block
+            padding 2px 10px
+            line-height 2rem
+            outline none 
+            border solid 1px rgb(230, 230 230)
+            border-radius 4px
+</style>
+
 
