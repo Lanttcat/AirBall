@@ -1,27 +1,22 @@
 <template>
-  <v-layout row>
-    <v-flex xs12 sm6 offset-sm3>
-      <v-card flat>
-        <v-list three-line>
-            <template v-for="(item, index) in items">
-                <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-                <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
-                <v-list-tile avatar v-else :key="item.title">
-                <v-list-tile-avatar>
-                    <img :src="item.avatar">
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                    <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
-                </v-list-tile-content>
-                </v-list-tile>
-            </template>
-        </v-list>
-      </v-card>
-    </v-flex>
-  </v-layout>
+    <div>
+        <!-- 预测列表 -->
+        <v-layout row>
+            <v-flex xs12>
+                <div class="subheading">神预测</div>
+                <game-card class="game-card-wrap"></game-card>
+                <game-card class="game-card-wrap"></game-card>
+                <game-card class="game-card-wrap"></game-card>
+                <game-card class="game-card-wrap"></game-card>
+                <game-card class="game-card-wrap"></game-card>
+                <game-card class="game-card-wrap"></game-card>
+            </v-flex>
+        </v-layout>
+        <!-- 往期预测王 -->
+    </div>
 </template>
 <script>
+import gameCard from './card/predictCard'
 function setState(store) {
     store.dispatch('appShell/appHeader/setAppHeader', {
         isShowHeader: true,
@@ -34,6 +29,10 @@ function setState(store) {
             src: '/static/img/icons/logo.png',
             alt: 'logo'
         }
+    });
+    store.dispatch('global/setShellStyleControl', {
+        header: 1,
+        footer: 1
     });
 }
 export default {
@@ -53,6 +52,9 @@ export default {
             ]
         }
     },
+    components: {
+        'game-card': gameCard
+    },
     async asyncData({store, route}) {
         setState(store);
     },
@@ -65,4 +67,9 @@ export default {
 #app
     .app-view
         top 52px
+
+    .game-card-wrap
+        padding 6px
+        border-radius 3px
+        background #E8F5E9
 </style>

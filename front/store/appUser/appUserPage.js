@@ -4,10 +4,10 @@
 
 export let state = () => {
     return {
-        boxList: [
+        boxList1: [
             {
                 boxId: 1,
-                name: '我的收藏',
+                name: '关注',
                 icon: '',
                 route: {
                     path: '/collection'
@@ -15,7 +15,7 @@ export let state = () => {
             },
             {
                 boxId: 2,
-                name: '我的攻略',
+                name: '我的文章',
                 icon: '',
                 route: {
                     path: '/user/articleList'
@@ -23,7 +23,7 @@ export let state = () => {
             },
             {
                 boxId: 3,
-                name: '陪玩',
+                name: '发起的讨论',
                 icon: '',
                 route: {
                     path: '/companion/'
@@ -31,6 +31,16 @@ export let state = () => {
             },
             {
                 boxId: 4,
+                name: '声望',
+                icon: '',
+                route: {
+                    path: '/user/reputation'
+                }
+            }
+        ],
+        boxList2: [
+            {
+                boxId: 1,
                 name: '图集',
                 icon: '',
                 route: {
@@ -38,15 +48,23 @@ export let state = () => {
                 }
             },
             {
-                boxId: 5,
-                name: '志愿者',
+                boxId: 2,
+                name: 'Air值',
+                icon: '',
+                route: {
+                    path: '/albums'
+                }
+            },
+            {
+                boxId: 3,
+                name: '募捐',
                 icon: '',
                 route: {
                     path: '/volunteer'
                 }
             },
             {
-                boxId: 6,
+                boxId: 4,
                 name: '设置',
                 icon: '',
                 route: {

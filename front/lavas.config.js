@@ -54,7 +54,7 @@ module.exports = {
         // extend(config, {type, env}) {
         //     // 在客户端和服务端同时生效，等同于 type === 'client' || type === 'server'
         //     if (type === 'base') {
-        //         config.devServer = {
+        //         config.dev = {
         //             disableHostCheck: true,
         //             host: '0.0.0.0',
         //             port: 8080
@@ -65,6 +65,11 @@ module.exports = {
         //         // });
         //     }
         // }
+        extendWithWebpackChain(config, {type, env}) {
+            // eslint 检测出错误时，依然继续编译
+            config.devServer.disableHostCheck(true);
+            config.devServer.host('0.0.0.0');
+        }
     },
     router: {
         mode: 'history',

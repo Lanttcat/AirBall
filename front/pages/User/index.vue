@@ -2,30 +2,7 @@
 <template>
     <div>
         <!-- 未登录界面 -->
-        <v-container
-            v-if="userInfo.status === 0"
-            grid-list-md text-xs-center 
-            class="home-feed">
-            <v-layout row class="card-item">
-                <v-flex xs12>
-                    <div style="text-align: left">
-                        <div class="headline">欢迎来到茶途</div>
-                    </div>
-                    <v-layout row>
-                        <v-flex xs6 full-height>
-                            <v-btn @click="toLogin" v-actmoni class="user-btn_login" color="amber accent-2" dark>登录/注册</v-btn>
-                        </v-flex>
-                        <v-flex xs6>
-                            <v-card-media
-                                src="../static/img/testimg/1.JPG"
-                                height="80px"
-                                contain>
-                            </v-card-media>
-                        </v-flex>
-                    </v-layout>
-                </v-flex>
-            </v-layout>
-        </v-container>
+        <!-- <user-title class="home-feed"></user-title> -->
 
         <!-- 登录界面 -->
         <v-container
@@ -65,13 +42,35 @@
                 </v-flex>
             </v-layout>
         </v-container>
-
+        <v-container style="width:100%;padding:0;margin-top:1rem">
+            <v-layout row wrap>
+                <v-flex
+                    xs3
+                    v-for="item in boxList1"
+                    :key="item.id"
+                    >
+                    <v-card flat tile class="user-setting_item">
+                        <v-flex full-height>
+                            <v-btn
+                                icon flat x-large
+                                @click="turnToSubPage(item.id, item.route)"
+                                style="position: relativel;top:10px">
+                                <v-icon class="app-header-icon">star</v-icon>
+                            </v-btn>
+                            <div>
+                                <v-btn flat small>{{ item.name }}</v-btn>
+                            </div>
+                        </v-flex>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+        </v-container>
         <!-- 公共界面 -->
         <v-container style="width:100%;padding:0;margin-top:1rem">
           <v-layout row wrap>
             <v-flex
                 xs4
-                v-for="item in boxList"
+                v-for="item in boxList2"
                 :key="item.id"
                 >
                 <v-card flat tile class="user-setting_item">
@@ -95,6 +94,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import userTitle from './userTitle.vue'
 function setState(store) {
     store.dispatch("appShell/appHeader/setAppHeader", {
         isShowHeader: false
@@ -107,6 +107,9 @@ function setState(store) {
 
 export default {
     name: "user",
+    components: {
+        'user-title': userTitle
+    },
     data() {
         return {
         items: [
@@ -127,7 +130,8 @@ export default {
     },
     computed: {
         ...mapState('appUser/appUserPage', [
-            'boxList'
+            'boxList1',
+            'boxList2'
         ]),
         ...mapState('userStatus/userStatu', [
             'userInfo'
