@@ -1,6 +1,6 @@
 <template>
     <v-dialog
-        v-model="commentCard"
+        v-model="commentSwitch"
         fullscreen
         transition="dialog-bottom-transition"
         :overlay="false"
@@ -68,6 +68,7 @@ export default {
     data() {
         return {
             imgFile: '',
+            commentSwitch: true,
             content: '',
             maxSize: 1000,
             items: [

@@ -7,7 +7,7 @@
         :left="x === 'left'"
         :multi-line="mode === 'multi-line'"
         :vertical="mode === 'vertical'"
-        v-model="snackbar">
+        v-model="message.msgSwitch">
         {{ message.msgText }}
         <v-btn flat color="pink" @click.native="snackbar = false">知道了~</v-btn>
     </v-snackbar>
@@ -28,16 +28,8 @@ export default {
     },
     methods: {
         ...mapMutations('global', {
-            setMsgTip: 'SETMSGTIP'
+            setMsgTip: 'setMsgTip'
         }),
-    },
-    watch: {
-        msgSwitch() {
-            this.snackbar = this.message.msgSwitch;
-            setTimeout(() => {
-                this.setMsgTip({msgSwitch: false, msgText: ''});
-            }, this.timeout);
-        }
     },
     computed: {
         ...mapState('global', [

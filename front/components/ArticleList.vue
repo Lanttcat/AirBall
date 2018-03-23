@@ -1,41 +1,69 @@
 <template>
-    <v-layout row>
-        <v-flex xs12  v-if="listArray">
-            <v-card flat>
-                <v-list>
-                    <v-list-tile avatar v-for="item in listArray" :key="item.title">
-                        <!-- <v-list-tile-action>
-                            <v-icon v-if="item.icon" color="pink">star</v-icon>
-                        </v-list-tile-action> -->
-                        <v-list-tile-content>
-                            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-                            <v-list-tile-sub-title>{{ item.time }}-{{item.status}}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                        <v-list-tile-avatar
-                            v-if="item.image"
-                            tile>
-                            <img :src="item.iamge">
-                        </v-list-tile-avatar>
-                    </v-list-tile>
-                </v-list>
-            </v-card>
-        </v-flex>
-        <v-flex xs12 v-else style="padding-top:3rem">
-            <div class="headline text-xs-center">
-                暂无
-            </div>
-            <div class="text-xs-center">
-                快去 <v-btn style="display:inline;paddig:0" flat color="error">创建</v-btn>第一篇文章吧
-            </div>
-        </v-flex>
-    </v-layout>
+    <v-container grid-list-md text-xs-center>
+        <v-layout v-for="item in listArray"
+            :key="item._id"
+            row wrap
+            class="article-list">
+            <v-flex xs8>
+                <div style="text-align: left">
+                    <div class="subheading" @click="TurnToArticle(item._id)">{{ item.title }}</div>
+                        <v-chip outline color="red">
+                            <!-- <v-icon left>label</v-icon> -->
+                            去处
+                        </v-chip>
+                        <v-chip outline color="red">
+                            <!-- <v-icon left>label</v-icon> -->
+                            标签
+                        </v-chip>
+                    <div>
+                        <span>{{ item.creatTime |  formatTime}}</span>
+                        <span>1111浏览</span>
+                        <span>161赞</span>
+                    </div>
+                </div>
+            </v-flex>
+            <v-flex xs4>
+                <v-card-media
+                    src="../../static/img/testimg/default.jpg"
+                    height="8rem"
+                    contain
+                ></v-card-media>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 <script>
 export default {
     name: 'article-list',
-    props: ['listArray']
+    props: ['listArray'],
+    filters: {
+        formatTime(value) {
+            let date = new Date(value);
+            let y = date.getFullYear() + '.';
+            let mo = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
+            let d = date.getDate() + ' ';
+            let h = date.getHours() + ':';
+            let m = date.getMinutes() + ':';
+            let s = date.getSeconds(); 
+            return mo + d + h + m + s; 
+        }
+    },
+    methods: {
+        TurnToArticle(id) {
+            this.$router.push({
+                path: 'article',
+                query: {
+                    id: id
+                }
+            });
+        }
+    }
 }
 </script>
 <style lang="stylus" scoped>
-
+#app
+    .subheading
+        line-height 2rem
+    .article-list
+        border-bottom solid 1px rgb(240, 240, 240);
 </style>
