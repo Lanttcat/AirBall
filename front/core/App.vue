@@ -1,20 +1,11 @@
 <template>
     <div id="app">
         <v-app>
-            <app-header v-if="shellStyleControl.header === 1"
+            <app-header v-if="themeStyle.header === 1"
                 class="app-shell-header"
                 @click-menu="handleClickHeaderMenu"
                 @click-back="handleClickHeaderBack">
             </app-header>
-            <!-- <articleHeader
-                v-else>
-            </articleHeader> -->
-
-            <!-- <app-sidebar
-                @hide-sidebar = "handleHideSidebar"
-                @show-sidebar = "handleShowSidebar"
-            >
-            </app-sidebar> -->
             <transition
                 :name="pageTransitionEffect"
                 @before-enter="handleBeforeEnter"
@@ -34,12 +25,11 @@
                     ></router-view>
             </transition>
             <app-bottom-navigator
-                v-if="shellStyleControl.footer === 1"
+                v-if="themeStyle.footer === 1"
                 class="app-shell-footer">
             </app-bottom-navigator>
             <article-bottom-navigator
-                v-if="shellStyleControl.footer === 2">
-
+                v-if="themeStyle.footer === 2">
             </article-bottom-navigator>
             <update-toast></update-toast>
             <msg-tip></msg-tip>
@@ -70,7 +60,7 @@ export default {
     },
     computed: {
         ...mapState('global', [
-            'shellStyleControl'
+            'shellStyleConfig'
         ]),
         ...mapState('pageTransition', {
             pageTransitionType: state => state.type,
@@ -85,11 +75,9 @@ export default {
             return `transition-${this.pageTransitionType}`;
         },
         themeStyle() {
-            let notNeedHeader = ['article', 'setting'];
-            console.log(this.$route.name)
-            console.log(notNeedHeader.includes(this.$route.name));
-            return !notNeedHeader.includes(this.$route.name);
-            // return this.$route.name !== 'article';
+            // header 1: 默认 2：简单 3： 无
+            // footer 1: 默认 2：文章 3： 无
+            return this.shellStyleConfig[this.$route.name] ? this.shellStyleConfig[this.$route.name] : {header: 1, footer:1}
         }
     },
     methods: {

@@ -30,7 +30,7 @@ export function createApp() {
     router.beforeEach((to, from, next) => {
         //注册全局钩子用来拦截导航
         //获取store里面的token
-        let token =  storage.getItem('oneStep_token');
+        let token =  storage.getItem('airball_token');
         //判断要去的路由有没有requiresAuth
         if (to.meta.requiresAuth){
             if (token){
