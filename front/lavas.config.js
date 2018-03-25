@@ -69,7 +69,11 @@ module.exports = {
             // eslint 检测出错误时，依然继续编译
             config.devServer.disableHostCheck(true);
             config.devServer.host('0.0.0.0');
-        }
+        },
+        // 监控server自动重启
+        watch: [
+            '/server'
+        ]
     },
     router: {
         mode: 'history',
