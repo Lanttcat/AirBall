@@ -142,6 +142,18 @@ route.post('/api/article', async (ctx) => {
         data: res
     };
 });
+
+// 步行街获取文章列表，根据uptime排序
+route.get('/api/allArticle', async (ctx) => {
+    let lastTime = ctx.query.lastTime;
+    let res = await article.selectAllArticle(lastTime);
+    ctx.response.type = 'json';
+    ctx.response.body = {
+        data: res
+    };
+});
+
+
 route.get('/api/article', async (ctx) => {
     let articleId = ctx.query.articleId;
     console.log(articleId);

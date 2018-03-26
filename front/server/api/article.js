@@ -17,6 +17,7 @@ const msgStatusText = {
 // 定义Schema
 let articleSchema = new Schema({
     id: Number,
+    title: String,
     authorId: String,
     content: String,
     tags: [String],
@@ -33,8 +34,8 @@ let articleSchema = new Schema({
             time: Date
         }
     ],
-    creatTime: Date,
-    updateTime: Date,
+    creatTime: Number,
+    updateTime: Number,
     similarArticle: [
         {
             articleId: Number
@@ -70,6 +71,7 @@ let article = {
         // 文章发布操作
         let result = {};
         let newArticle = new Article({
+            title: info.title,
             authorId: info.authorId,
             content: info.content,
             tags: info.tags,
@@ -90,6 +92,7 @@ let article = {
         return result;
     },
     selectArticle: async (articleId) => {
+        // 步行街获取文章根据更新时间排列
         let result = {};
         // 查询文章
         try {
@@ -101,6 +104,31 @@ let article = {
             result.message = '获取文章成功';
             result.status = true;
             result.data = res;
+        }
+        catch (e) {
+            console.log(e);
+            result.message = '获取文章失败';
+
+        }
+        return result;
+    },
+    selectAllArticle: async (lastTime) => {
+        // 步行街获取文章根据更新时间排列
+        // 先根据时间戳计算，后期需要优化
+
+        let result = {};
+
+        let  condition = lastTime ? {"updateTime":{$lt:parseInt(lastTime)}} : {};
+        console.log(condition);
+        // 查询文章
+        try {
+            let res = await Article.find(condition).sort({updateTime: -1}).limit(5);
+            // let res = await Article.queryArticle(articleId);
+            // console.log(res);
+            result.message = '获取文章成功';
+            result.status = true;
+            result.data = res;
+            result.lastTime = res[res.length-1].updateTime
         }
         catch (e) {
             console.log(e);

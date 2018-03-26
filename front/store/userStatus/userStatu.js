@@ -10,23 +10,16 @@ export let state = () => {
          */
         userInfo: {
             status: 1,
-            uphone: 1111,
-            uid: '',
-            uname: '',
-            uage: null,
-            uSite: '',
-            uIntro: '',
-            volunteer: {
-                volId: 111,
-                volTeam: {
-                    teamId: 88,
-                    teamName: '',
-                    teamMember: 222
-                }
-            }
+            phone: 1111,
+            aid: '',
+            name: '',
+            age: null,
+            site: '',
+            intro: '',
+            repu: 0
         }
     };
-};;
+};
 
 export const mutations = {
     syncUserInfo(state, userData) {

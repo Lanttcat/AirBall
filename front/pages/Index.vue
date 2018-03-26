@@ -1,9 +1,14 @@
 <template>
     <div>
         <loacl-header></loacl-header>
+
         <v-layout class="game-card-wrap">
             <game-card></game-card>
         </v-layout>
+        <!-- 步行街 用于缓冲用户文章，筛选后推荐值首页 -->
+        <div @click="toStreet">
+            <p>步行街</p>
+        </div>
         <v-container grid-list-md text-xs-center class="home-feed">
             <!-- 一般三到四个 -->
             <!-- <v-layout
@@ -177,6 +182,9 @@ export default {
                     id: id
                 }
             });
+        },
+        toStreet() {
+            this.$router.push('/main/street');
         }
     }
 };

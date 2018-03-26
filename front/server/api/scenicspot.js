@@ -4,7 +4,7 @@
 
 let mongo = require('mongoose');
 
-mongo.connect('mongodb://nikolan:airball_test_bishe@123.207.150.130:27017/mo_airball');
+mongo.connect('mongodb://admin_lan:19951024lyxA@123.207.150.130:27017/airball_db');
 
 let Schema = mongo.Schema;
 

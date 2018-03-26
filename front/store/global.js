@@ -3,7 +3,6 @@
  * @author lavas
  */
 
-const setMsgTip = 'SETMSGTIP';
 //  const setShellStyleControl = 'SETSHELLSTYLECONTROL';
 export const state = () => {
     return {
@@ -16,12 +15,58 @@ export const state = () => {
             header: 1,
             // 1: 默认 2：文章 3： 无
             footer: 1
+        },
+        shellStyleConfig: {
+            'index': {
+                header: 1,
+                footer: 1
+            },
+            'information': {
+                header: 1,
+                footer: 1
+            },
+            'edit': {
+                header: 3,
+                footer: 3
+            },
+            'companion': {
+                header: 1,
+                footer: 1
+            },
+            'user': {
+                header: 1,
+                footer: 1
+            },
+            'articleDetail': {
+                header: 1,
+                footer: 1
+            },
+            'collection': {
+                header: 1,
+                footer: 1
+            },
+            'Volunteer': {
+                header: 1,
+                footer: 1
+            },
+            'editReview': {
+                header: 3,
+                footer: 3
+            },
+            'login': {
+                header: 3,
+                footer: 3
+            },
+            'mainStreet': {
+                header: 3,
+                footer: 1
+            }
         }
     };
 };
 
 export const mutations = {
-    [setMsgTip](state, info) {
+    setMsgTip(state, info) {
         state.message.msgSwitch = info.msgSwitch;
         state.message.msgText = info.msgText;
     },
