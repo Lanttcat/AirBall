@@ -111,5 +111,6 @@ export default {
         float left
         width 100px
         height 100px
+
 </style>
 

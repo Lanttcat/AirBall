@@ -10,13 +10,18 @@
                         <div>{{ info.intro }}</div>
                     </div>
                 </v-card-title>
+                <v-card-title primary-title>
+                    <div>
+                        <h3 class="headline mb-0">文章加载失败^_^</h3>
+                    </div>
+                </v-card-title>
                 <div class="text-xs-right">
                     <v-btn flat @click="upComment" color="orange">评论</v-btn>
-                    <v-btn flat color="orange">点亮</v-btn>
+                    <v-btn flat color="orange">收藏</v-btn>
                     <v-btn flat color="orange">举报</v-btn>
                 </div>
                 <v-list two-line>
-                    <template v-if="!info.commentArray">
+                    <template v-if="info.commentArray">
                         <v-subheader>这些评论亮了</v-subheader>
                         <v-list-tile-content>
                             <v-list-tile-title></v-list-tile-title>
@@ -24,24 +29,9 @@
                                 暂时还没有评论，快来抢沙发吧
                             </v-list-tile-sub-title>
                         </v-list-tile-content>
-                        <!-- <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
-                        <v-list-tile avatar v-else  :key="item.title">
-                        <v-list-tile-avatar>
-                            <img :src="item.avatar">
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                            <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
-                        </v-list-tile-content> -->
-                        <!-- </v-list-tile> -->
                     </template>
                     <template v-else>
-                        <v-list-tile-content>
-                            <v-list-tile-title></v-list-tile-title>
-                            <v-list-tile-sub-title>
-                                暂时还没有评论，快来抢沙发吧
-                            </v-list-tile-sub-title>
-                        </v-list-tile-content>
+                        <comments></comments>
                     </template>
                 </v-list>
             </v-card>
@@ -49,7 +39,7 @@
         <template>
     <v-bottom-sheet v-model="dialog">
         <v-card tile>
-            <v-toolbar card dark color="primary">
+            <v-toolbar card light color="dark">
                 <v-btn icon @click="closeCard" dark>
                     <v-icon>close</v-icon>
                 </v-btn>
@@ -67,8 +57,9 @@
                         name="commentContent"
                         label="填写评论信息"
                         textarea
+                        color="light-green accent-4"
                         v-model="content"
-                        counter='11'
+                        counter='100'
                     ></v-text-field>
                     <div>
                         <span>规范协议</span>
@@ -84,6 +75,7 @@
 </template>
 <script>
 import articleComment from '../../components/articleComment';
+import comments from '../../components/CommentItem';
 import { mapActions, mapState } from "vuex";
 function setState(store) {
     store.dispatch("appShell/appHeader/setAppHeader", {
@@ -104,7 +96,8 @@ export default {
         }
     },
     components: {
-        'article-commenet': articleComment
+        'article-commenet': articleComment,
+        'comments': comments
     },
     methods: {
         upComment() {
@@ -160,4 +153,10 @@ export default {
         min-width: 40px;
         .btn__content
             padding 0
+
+    .comment-input
+        padding 8px
+
+        .input-group__input
+            border 1px solid red
 </style>

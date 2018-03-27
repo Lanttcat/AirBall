@@ -61,15 +61,7 @@ export default {
         margin 0 auto
 
 .btn-nav-center
-    // margin-top 8px
-    // width 40px
-    // height 40px
     min-width 40px
-    // border 1px solid rgb(240, 240, 240)
-    // border-radius 100%
-//     svg
-//         position relative
-//         top -8px
 .iconAli
     display block
     height 1.7rem
