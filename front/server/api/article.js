@@ -4,7 +4,7 @@
 
 let mongo = require('mongoose');
 
-mongo.connect('mongodb://admin_lan:19951024lyxA@123.207.150.130:27017/airball_db');
+
 
 let Schema = mongo.Schema;
 
@@ -166,6 +166,16 @@ let article = {
     },
     addZan: () => {
         // 增加点赞
+    },
+    insertMany: (data) => {
+        Article.insertMany(data, function(error, doc) {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log(doc);
+            }
+        })
     }
 
 };
