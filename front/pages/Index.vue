@@ -98,7 +98,7 @@ export default {
     name: 'index',
     data () {
         return {
-            
+
             ssList: [],
             items: [
                 {
@@ -220,13 +220,13 @@ export default {
         .item-tag
             height 1.5rem
 
-        img 
+        img
             height 8rem
 .carousel
     height 200px
 
 // 替换header
-#app 
+#app
     .app-view.app-view-with-header
         top 0
 
