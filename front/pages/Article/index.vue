@@ -7,6 +7,11 @@
                 <v-card-title primary-title>
                     <div>
                         <h3 class="headline mb-0">{{ info.title }}</h3>
+                        <h3 class="headline mb-0">测试标题</h3>
+                        <div>
+                            <span>time</span>
+                            <span @click='turnToAuthor'>作者</span>
+                        </div>
                         <div>{{ info.intro }}</div>
                     </div>
                 </v-card-title>
@@ -64,7 +69,7 @@
                     <div>
                         <span>规范协议</span>
                     </div>
-                    
+
                 </v-flex>
             </v-layout>
           <!-- <div style="flex: 1 1 auto;"></div> -->
@@ -103,11 +108,16 @@ export default {
         upComment() {
             this.dialog = true;
         },
-         closeCard() {
+        closeCard() {
             this.dialog = false;
         },
         publish() {
             // 验证信息
+        },
+        turnToAuthor() {
+            console.log(this.$router)
+            // 获取文章id
+            this.$router.push('/user/user-home');
         }
     },
     async asyncData({ store, route }) {

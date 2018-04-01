@@ -100,7 +100,7 @@
         </v-tab-item>
     </v-tabs>
     <!-- <v-container fluid>
-        
+
     </v-container> -->
 </template>
 <script>
@@ -220,7 +220,7 @@ export default {
                 return;
             }
             if (!this.registerInfo.userPassword) {
-                
+
                 this.alertStatusChange(true, this.errprTipInfo[4]);
                 return;
             }
