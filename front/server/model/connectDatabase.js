@@ -4,28 +4,14 @@
  */
 
 const mysql = require('mysql');
-
+const config = require('../../config.js');
 // 设置数据库配置
 const isProduct = process.env.NODE_ENV === 'production';
 
 // headless
 const dbConfig = {
-    prod: {
-        connectionLimit: 10,
-        host: '123.207.150.130',
-        port: '3306',
-        user: 'root',
-        password: '19951024lyxA',
-        database: 'airball_base'
-    },
-    dev: {
-        connectionLimit: 10,
-        host: '123.207.150.130',
-        port: '3306',
-        user: 'root',
-        password: '19951024lyxA',
-        database: 'airball_base'
-    }
+    prod: config.mysql,
+    dev: config.mysql
 };
 
 /**
