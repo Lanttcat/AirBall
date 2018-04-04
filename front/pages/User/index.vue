@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <!-- 未登录界面 -->
@@ -7,7 +6,7 @@
         <!-- 登录界面 -->
         <v-container
             v-if="userInfo.status === 1"
-            grid-list-md text-xs-center 
+            grid-list-md text-xs-center
             class="home-feed">
             <v-layout row class="card-item">
                 <v-flex xs12>
@@ -15,7 +14,7 @@
                         <v-list two-line subheader>
                             <v-list-tile>
                                 <v-list-tile-avatar>
-                                     <img src="../../static/img/avatar/logo.png">
+                                     <img src="../../static/img/test_head.jpg">
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
                                 <v-list-tile-title>{{ userInfo.uname }}</v-list-tile-title>
@@ -23,7 +22,11 @@
                                 </v-list-tile-content>
                                 <v-list-tile-action>
                                 <v-btn icon ripple>
-                                    <v-icon color="grey lighten-1">info</v-icon>
+                                    <v-icon
+                                        color="grey lighten-1"
+                                        @click='toRepu'>
+                                        info
+                                    </v-icon>
                                 </v-btn>
                                 </v-list-tile-action>
                             </v-list-tile>
@@ -162,6 +165,9 @@ export default {
         },
         turnToSubPage(id, route) {
             this.$router.push(route);
+        },
+        toRepu() {
+            this.$router.push('repu');
         }
     }
 };
@@ -169,7 +175,7 @@ export default {
 
 <style lang="stylus" scoped>
 @require '~@/assets/stylus/variable';
- #app 
+ #app
     .app-view-with-header
         top 0
 .content {

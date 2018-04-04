@@ -64,6 +64,7 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+@require '~@/assets/stylus/variable'
 #app
     .app-view
         top 52px
