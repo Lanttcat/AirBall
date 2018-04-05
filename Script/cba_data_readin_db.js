@@ -48,7 +48,7 @@ function match(num) {
             let matchlist = JSON.parse(data).data;
 
             matchlist.forEach((item) => {
-                item.league_match.matchTime += 15552000;
+                item.league_match.matchTime += 12960000000;
                 item.league_match.matchStatus = 0;
                 let sql = sqlStr(item.league_match); 
                 sqlQuery(sql);

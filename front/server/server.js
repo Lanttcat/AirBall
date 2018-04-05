@@ -8,6 +8,7 @@ const oneBcrypt = require('./oneBcrypt');
 let user = require('./api/user');
 let article = require('./api/article');
 let scenicspot = require('./api/scenicspot');
+let Match = require('./api/match.js');
 const jwt = require('jsonwebtoken');
 
 let route = new Router();
@@ -183,6 +184,18 @@ route.get('/api/scenicspotList', async (ctx) => {
         data: res
     };
 });
+// 比赛相关请求
+let match = new Match();
+route.get('/api/match', async (ctx) => {
+    console.log('cdddddd')
+    let res = await match.getMatchList();
+    ctx.response.type = 'json';
+    ctx.response.body = {
+        data: res
+    };
+});
+
+
 
 // 插入文章
 module.exports = route;
