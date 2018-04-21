@@ -1,0 +1,21 @@
+@startuml
+
+: aiticle page;
+
+if (redict) then(Yes)
+    : title and content;
+    fork
+        : click publish;
+    fork again
+        : click review;
+    fork again
+        : click save;
+    fork end
+else (No)
+    : store data;
+    : title and content;
+endif
+
+
+
+@enduml
