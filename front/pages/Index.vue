@@ -3,7 +3,7 @@
         <loacl-header></loacl-header>
 
         <v-layout class="game-card-wrap">
-            <game-card></game-card>
+            <game-card :match="matchList"></game-card>
         </v-layout>
         <!-- 步行街 用于缓冲用户文章，筛选后推荐值首页 -->
         <div @click="toStreet">
@@ -74,7 +74,7 @@
 import loaclHeader from '../components/LocalBanner'
 import gameCard from '../components/gameCard'
 
-import {mapActions} from 'vuex';
+import {mapActions, mapMutations} from 'vuex';
 function setState(store) {
     store.dispatch('appShell/appHeader/setAppHeader', {
         isShowHeader: true,
@@ -99,6 +99,7 @@ export default {
     data () {
         return {
 
+            matchList: [],
             ssList: [],
             items: [
                 {
@@ -135,6 +136,19 @@ export default {
         setState(this.$store);
     },
     created() {
+        // 这里需要做个预处理：提前加载整个赛季的比赛列表
+        this.$http.get("/api/match", {
+            params: {
+                days: 3
+            }
+        }).then(({data}) => {
+            console.log(data.data);
+            if(data.data.length > 0) {
+                this.storeMatchList(data.data);
+                this.matchList = data.data.slice(0, 4);
+                console.log(this.matchList);
+            }
+        });
         // this.$http.get("/api/scenicspot", {
         //     params: {
         //         num: 3
@@ -155,6 +169,9 @@ export default {
         // );
     },
     methods: {
+        ...mapMutations('match/list', [
+            'storeMatchList'
+        ]),
         getSSList: () => {
             this.$http.get("/api/scenicspot", {
                 params: {

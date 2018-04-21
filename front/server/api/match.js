@@ -7,16 +7,37 @@
 let query = require('../model/query');
 
 class Match{
-    async getMatchList() {
-        let date = new Date();
+
+    /*
+     * 将时间戳转换成当前日期的零点时间戳
+     * @return {String} 零点时间戳
+     *
+        * */
+    _getIntTime(timer) {
+        let time = timer || (new Date()).getTime();
+
+        let date = new Date(time);
+
         let currentDate = date.toLocaleDateString();
 
-        let time = (new Date(currentDate)).getTime();
+        let res = (new Date(currentDate)).getTime();
 
-        let maxTime = time + 60 * 60 * 24 * 1000 * 10;
-        let minTime = time - 60 * 60 * 24 * 1000 * 10;
+        return res;
+    }
+    /*
+     * @param {Array} selectDate
+     *
+     * */
 
-        let sql = `SELECT * from match_list WHERE 'matchTime'>='${minTime}' and 'matchTime'<='${maxTime}'`;
+    async getOneMatch(selectTimer) {
+
+        let intTime = this._getIntTime(selectTimer);
+
+        let maxTime = intTime + 60 * 60 * 24 * 1000 * 1;
+
+        // 查询一天
+
+        let sql = `SELECT * from match_list WHERE matchTime>='${intTime}' and matchTime<='${maxTime}'`;
         console.log(sql);
 
         try {
@@ -31,6 +52,27 @@ class Match{
 
             return false;
         }
+    }
+    async getShowMatchList(days) {
+
+        // 获取展示的比赛列表
+        let timer = this._getIntTime();
+
+        let maxTime = timer + 60 * 60 * 24 * 1000 * 1;
+        let minTime = timer - 60 * 60 * 24 * 1000 * days;
+
+        let sql = `SELECT * from match_list WHERE matchTime>='${minTime}' and matchTime<='${maxTime}' ORDER BY matchTime`;
+        console.log(sql);
+        try {
+            let res = await query(sql);
+
+            return res;
+        }
+        catch (e) {
+            console.log(e);
+            return false;
+        }
+
     }
 }
 

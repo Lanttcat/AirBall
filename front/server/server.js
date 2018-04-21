@@ -187,8 +187,9 @@ route.get('/api/scenicspotList', async (ctx) => {
 // 比赛相关请求
 let match = new Match();
 route.get('/api/match', async (ctx) => {
-    console.log('cdddddd')
-    let res = await match.getMatchList();
+    let days = ctx.query.days;
+    console.log(days);
+    let res = await match.getShowMatchList(days);
     ctx.response.type = 'json';
     ctx.response.body = {
         data: res

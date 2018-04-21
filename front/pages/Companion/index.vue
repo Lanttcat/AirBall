@@ -19,7 +19,7 @@
     </div>
 </template>
 <script>
-import gameCard from './card/predictCard'
+import gameCard from './card/predictCard';
 function setState(store) {
     store.dispatch('appShell/appHeader/setAppHeader', {
         isShowHeader: true,
@@ -43,6 +43,7 @@ export default {
     data () {
         return {
             matchInfos: []
+        }
     },
     components: {
         'game-card': gameCard
