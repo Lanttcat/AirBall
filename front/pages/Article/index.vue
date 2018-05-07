@@ -42,45 +42,46 @@
             </v-card>
         </v-flex>
         <template>
-    <v-bottom-sheet v-model="dialog">
-        <v-card tile>
-            <v-toolbar card light color="dark">
-                <v-btn icon @click="closeCard" dark>
-                    <v-icon>close</v-icon>
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                    <v-btn dark flat @click="publish">发布</v-btn>
-                </v-toolbar-items>
-            </v-toolbar>
-            <v-layout class="comment-input">
-                <v-flex xs12 align-center='false'>
-                    <v-text-field
-                        box
-                        auto-grow
-                        rows='3'
-                        name="commentContent"
-                        label="填写评论信息"
-                        textarea
-                        color="light-green accent-4"
-                        v-model="content"
-                        counter='100'
-                    ></v-text-field>
-                    <div>
-                        <span>规范协议</span>
-                    </div>
-
-                </v-flex>
-            </v-layout>
-          <!-- <div style="flex: 1 1 auto;"></div> -->
-        </v-card>
-    </v-bottom-sheet>
-</template>
+            <v-bottom-sheet v-model="dialog">
+                <v-card tile>
+                    <v-toolbar card light>
+                        <v-btn icon @click="closeCard">
+                            <v-icon>close</v-icon>
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-toolbar-items>
+                            <v-btn icon @click="publish">
+                                <v-icon>publish</v-icon>
+                            </v-btn>
+                        </v-toolbar-items>
+                    </v-toolbar>
+                    <v-layout class="comment-input">
+                        <v-flex xs12 align-center='false'>
+                            <v-text-field
+                                box
+                                light
+                                auto-grow
+                                rows='3'
+                                name="commentContent"
+                                label="填写评论信息"
+                                textarea
+                                color="grey lighten-3"
+                                v-model="content"
+                                counter='100'
+                            ></v-text-field>
+                            <div>
+                                <span>规范协议</span>
+                            </div>
+                        </v-flex>
+                    </v-layout>
+                </v-card>
+            </v-bottom-sheet>
+        </template>
     </v-layout>
 </template>
 <script>
-import articleComment from '../../components/articleComment';
-import comments from '../../components/CommentItem';
+import articleComment from '@/components/ArticleComment';
+import comments from '@/components/CommentItem';
 import { mapActions, mapState } from "vuex";
 function setState(store) {
     store.dispatch("appShell/appHeader/setAppHeader", {

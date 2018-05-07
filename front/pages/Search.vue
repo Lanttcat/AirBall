@@ -61,11 +61,12 @@ export default {
         return {
             query: '',
             loading: false,
-            data: []
+            data: [],
+            model: ''
         };
     },
     methods: {
-        async search() {
+        async search_ceshi() {
 
             // 把数据清空
             this.data = [];
@@ -116,6 +117,27 @@ export default {
             ];
 
             this.loading = false;
+        },
+        
+        /**
+         * 搜索具体处理
+         */
+
+        search(content, model) {
+            // ?content=科比&model=tag
+            // 清空data
+            this.data = [];
+
+            this.model = model ? model : 'all';
+
+            this.$http.get("/api/search", {
+                params: {
+                    content: content,
+                    model: model
+                }
+            }).then(
+                
+            );
         }
     },
     async asyncData({store, route}) {

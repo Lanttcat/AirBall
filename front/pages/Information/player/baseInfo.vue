@@ -2,6 +2,7 @@
     <v-container fluid grid-list-md class="control">
         <div class="title mb-3">赛季场均</div>
         <v-data-table
+            flat
             :headers="headers"
             :items="baseAvData"
             hide-actions
@@ -30,14 +31,14 @@
             <v-flex
                 slot="item"
                 slot-scope="props" xs4 sm3 md3 lg2>
-                <v-card>
-                <v-card-title><h4>{{ props.item.stat_type_name }}</h4></v-card-title>
-                <v-divider></v-divider>
-                <v-list dense>
-                    <v-list-tile>
-                        <v-list-tile-content class="align-end">{{ props.item.score }}</v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
+                <v-card flat>
+                    <v-card-title><h4>{{ props.item.stat_type_name }}</h4></v-card-title>
+                    <v-divider></v-divider>
+                    <v-list dense>
+                        <v-list-tile>
+                            <v-list-tile-content class="align-end">{{ props.item.score }}</v-list-tile-content>
+                        </v-list-tile>
+                    </v-list>
                 </v-card>
             </v-flex>
         </v-data-iterator>

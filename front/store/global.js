@@ -60,6 +60,14 @@ export const state = () => {
             'mainStreet': {
                 header: 3,
                 footer: 1
+            },
+            'setting': {
+                header: 3,
+                footer: 3
+            },
+            'search': {
+                header: 3,
+                footer: 3
             }
         }
     };

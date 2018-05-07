@@ -1,117 +1,129 @@
 <template>
-    <v-tabs
-        v-model="active"
-        color="white"
-        fixed-tabs
-        slider-color="yellow">
-        <v-tab
-            v-for="item in navs"
-            :key="item"
-            ripple>
-            {{ item }}
-        </v-tab>
-        <!-- 登录tab -->
-        <v-tab-item>
-            <v-layout row class="login-form">
-                <v-flex xs3>
-                    <v-subheader>手机</v-subheader>
-                </v-flex>
-                <v-flex xs9>
-                    <input type="text" class="login-input" v-model="loginInfo.userPhone" placeholder="手机登录更安全哟">
-                </v-flex>
-            </v-layout>
-            <v-layout row class="login-form">
-                <v-flex xs3>
-                    <v-subheader>密码</v-subheader>
-                </v-flex>
-                <v-flex xs9>
-                    <input type="password" class="login-input" v-model="loginInfo.userPassword" placeholder="">
-                </v-flex>
-            </v-layout>
-            <v-layout row>
-                <v-flex xs5 offset-xs1>
-                    <v-alert
-                        outline
-                        color="error"
-                        class="alert-error"
-                        :value="alertControl.status"
-                        transition="scale-transition">
-                        提示：{{ alertControl.text}}
-                    </v-alert>
-                </v-flex>
-                <v-flex xs5>
-                    <button style="text-align:right" class="text-lg-right">忘记密码</button>
-                </v-flex>
-            </v-layout>
-            <v-layout row class="login-form">
-                <v-flex xs12>
-                    <button class="login-btn" @click="userLoginControl">登录</button>
-                </v-flex>
-            </v-layout>
-        </v-tab-item>
-        <!-- 注册tab -->
-        <v-tab-item>
-            <v-layout row class="login-form">
-                <v-flex xs3>
-                    <v-subheader>手机</v-subheader>
-                </v-flex>
-                <v-flex xs9>
-                    <input type="text" class="login-input" v-model="registerInfo.userPhone" placeholder="手机号">
-                </v-flex>
-            </v-layout>
-            <v-layout row class="login-form">
-                <v-flex xs3>
-                    <v-subheader>验证码</v-subheader>
-                </v-flex>
-                <v-flex xs5>
-                    <input type="text" class="login-input" v-model="registerInfo.varifyCode" placeholder="验证码">
-                </v-flex>
-                <v-flex xs4>
-                    <div>
-                        <button @click="getVerifyCode" class="login-btn_code">提交</button>
-                    </div>
-                </v-flex>
-            </v-layout>
-            <v-layout row class="login-form">
-                <v-flex xs3>
-                    <v-subheader>密码</v-subheader>
-                </v-flex>
-                <v-flex xs9>
-                    <input type="text" class="login-input" v-model="registerInfo.userPassword" placeholder="password">
-                </v-flex>
-            </v-layout>
-            <v-layout row>
-                <v-flex xs5 offset-xs1>
-                    <v-alert
-                        outline
-                        color="error"
-                        class="alert-error"
-                        :value="alertControl.status"
-                        transition="scale-transition">
-                        提示：{{ alertControl.text}}
-                    </v-alert>
-                </v-flex>
-            </v-layout>
-            <v-layout row class="login-form">
-                <v-flex xs12>
-                    <button class="login-btn" @click="userRegisterControl">注册</button>
-                </v-flex>
-            </v-layout>
-        </v-tab-item>
-    </v-tabs>
+    <div>
+        <sub-header :subHeaderData = menu></sub-header>
+        <v-divider></v-divider>
+        <v-tabs
+            v-model="active"
+            color="white"
+            fixed-tabs
+            slider-color="light-green lighten-1">
+            <v-tab
+                v-for="item in navs"
+                :key="item"
+                ripple>
+                {{ item }}
+            </v-tab>
+            <!-- 登录tab -->
+            <v-tab-item>
+                <v-layout row class="login-form">
+                    <v-flex xs3>
+                        <v-subheader>手机</v-subheader>
+                    </v-flex>
+                    <v-flex xs9>
+                        <input type="text" class="login-input" v-model="loginInfo.userPhone" placeholder="">
+                    </v-flex>
+                </v-layout>
+                <v-layout row class="login-form">
+                    <v-flex xs3>
+                        <v-subheader>密码</v-subheader>
+                    </v-flex>
+                    <v-flex xs9>
+                        <input type="password" class="login-input" v-model="loginInfo.userPassword" placeholder="">
+                    </v-flex>
+                </v-layout>
+                <v-layout row>
+                    <v-flex xs5 offset-xs1>
+                        <v-alert
+                            outline
+                            color="error"
+                            class="alert-error"
+                            :value="alertControl.status"
+                            transition="scale-transition">
+                            提示：{{ alertControl.text}}
+                        </v-alert>
+                    </v-flex>
+                    <v-flex xs5>
+                        <button style="text-align:right" class="text-lg-right">忘记密码</button>
+                    </v-flex>
+                </v-layout>
+                <v-layout row class="login-form">
+                    <v-flex xs12>
+                        <button class="login-btn" @click="userLoginControl">登录</button>
+                    </v-flex>
+                </v-layout>
+            </v-tab-item>
+            <!-- 注册tab -->
+            <v-tab-item>
+                <v-layout row class="login-form">
+                    <v-flex xs3>
+                        <v-subheader>手机</v-subheader>
+                    </v-flex>
+                    <v-flex xs9>
+                        <input type="text" class="login-input" v-model="registerInfo.userPhone" placeholder="">
+                    </v-flex>
+                </v-layout>
+                <v-layout row class="login-form">
+                    <v-flex xs3>
+                        <v-subheader>验证码</v-subheader>
+                    </v-flex>
+                    <v-flex xs5>
+                        <input type="text" class="login-input" v-model="registerInfo.varifyCode" placeholder="">
+                    </v-flex>
+                    <v-flex xs4>
+                        <div>
+                            <button @click="getVerifyCode" class="login-btn_code">提交</button>
+                        </div>
+                    </v-flex>
+                </v-layout>
+                <v-layout row class="login-form">
+                    <v-flex xs3>
+                        <v-subheader>密码</v-subheader>
+                    </v-flex>
+                    <v-flex xs9>
+                        <input type="text" class="login-input" v-model="registerInfo.userPassword" placeholder="">
+                    </v-flex>
+                </v-layout>
+                <v-layout row>
+                    <v-flex xs5 offset-xs1>
+                        <v-alert
+                            outline
+                            color="error"
+                            class="alert-error"
+                            :value="alertControl.status"
+                            transition="scale-transition">
+                            提示：{{ alertControl.text}}
+                        </v-alert>
+                    </v-flex>
+                </v-layout>
+                <v-layout row class="login-form">
+                    <v-flex xs12>
+                        <button class="login-btn" @click="userRegisterControl">注册</button>
+                    </v-flex>
+                </v-layout>
+            </v-tab-item>
+        </v-tabs>
+    </div>
     <!-- <v-container fluid>
 
     </v-container> -->
 </template>
 <script>
 import storage from '../../lib/storage.js';
+import subHeader from '@/components/SubHeader';
 import {mapState, mapMutations, mapActions} from 'vuex';
 
 export default {
+    components: {
+        'sub-header': subHeader
+    },
     name: "login",
     data() {
         return {
             navs: ['登录', '注册'],
+            menu: {
+                // leftIcon: 'arrow_back',
+                title: 'AirBall'
+            },
             loginInfo: {
                 userPhone: null,
                 userPassword: null
@@ -196,6 +208,8 @@ export default {
                     if (data.status) {
                         // 将token写入localstorage
                         storage.setItem('airball_token', data.token);
+                        // 存储过期日期 时间位1000 * 60 * 60 * 24
+                        storage.setItem('airball_time', (new Date()).getTime());
                         that.setUserInfo(data.user);
                         // 将消息同步到store
                         that.setMsgTip({msgSwitch: true, msgText: data.message});
@@ -209,6 +223,8 @@ export default {
                     }
                 }).catch((e) => {
                     console.log(e);
+                    // 问题监控：log打点
+                    
                     that.setMsgTip({msgSwitch: true, msgText: '服务器错误'});
                 })
         },

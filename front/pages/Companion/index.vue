@@ -8,11 +8,11 @@
 
                     <game-card :matchInfo="item" class="game-card-wrap"></game-card>
                 </div>
+                <!-- <game-card class="game-card-wrap"></game-card>
                 <game-card class="game-card-wrap"></game-card>
                 <game-card class="game-card-wrap"></game-card>
                 <game-card class="game-card-wrap"></game-card>
-                <game-card class="game-card-wrap"></game-card>
-                <game-card class="game-card-wrap"></game-card>
+                <game-card class="game-card-wrap"></game-card> -->
             </v-flex>
         </v-layout>
         <!-- 往期预测王 -->
@@ -54,6 +54,18 @@ export default {
     },
     mounted() {
         // 获取比赛列表
+        this.$http.get("/api/match", {
+            params: {
+                days: 3
+            }
+        }).then(({data}) => {
+            console.log(data.data);
+            if(data.data.length > 0) {
+                // this.storeMatchList(data.data);
+                this.matchInfos = data.data;
+                console.log(this.matchInfos);
+            }
+        });
 
     },
     activated() {

@@ -31,10 +31,20 @@ export function createApp() {
         //注册全局钩子用来拦截导航
         //获取store里面的token
         let token =  storage.getItem('airball_token');
+        let time = storage.getItem('airball_time');
         //判断要去的路由有没有requiresAuth
         if (to.meta.requiresAuth){
             if (token){
-                next();
+                // 检查是否过期 ()
+                if (parseInt(time) - (new Date()).getTime() > 1000 * 60 * 60 * 24) {
+                    next({
+                        path: '/login',
+                        query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
+                    });
+                }
+                else {
+                    next();
+                }
             }
             else {
                 next({
@@ -56,6 +66,8 @@ export function createApp() {
     });
     return {App, router, store};
 }
+
+
 
 if (module.hot) {
     module.hot.accept();

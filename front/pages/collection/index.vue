@@ -9,7 +9,7 @@
 <script>
 import { mapState } from 'vuex';
 import subHeader from '@/components/SubHeader';
-import articleCard from '@/components/articleCard';
+import articleCard from '@/components/ArticleCard';
 function setState(store) {
     store.dispatch('appShell/appHeader/setAppHeader', {
         isShowHeader: false

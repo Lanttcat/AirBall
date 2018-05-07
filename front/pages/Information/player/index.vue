@@ -42,7 +42,7 @@ import gameInfo from '../../../mock/gameinfo.json';
 import playerTitle from './title.vue';
 import baseInfo from './baseInfo.vue';
 import dataInfo from './dataInfo.vue';
-import articleCard from '@/components/articleCard';
+import articleCard from '@/components/ArticleCard';
 import dataTableVue from '../common/dataTable.vue';
 
 function setState(store) {

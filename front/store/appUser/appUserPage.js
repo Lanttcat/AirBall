@@ -8,7 +8,7 @@ export let state = () => {
             {
                 boxId: 1,
                 name: '关注',
-                icon: '',
+                icon: 'star',
                 route: {
                     path: '/collection'
                 }
@@ -16,7 +16,7 @@ export let state = () => {
             {
                 boxId: 2,
                 name: '我的文章',
-                icon: '',
+                icon: 'library_books',
                 route: {
                     path: '/user/articleList'
                 }
@@ -24,7 +24,7 @@ export let state = () => {
             {
                 boxId: 3,
                 name: '发起的讨论',
-                icon: '',
+                icon: 'message',
                 route: {
                     path: '/companion/'
                 }
@@ -32,7 +32,7 @@ export let state = () => {
             {
                 boxId: 4,
                 name: '声望',
-                icon: '',
+                icon: 'opacity',
                 route: {
                     path: '/user/reputation'
                 }
@@ -42,7 +42,7 @@ export let state = () => {
             {
                 boxId: 1,
                 name: '图集',
-                icon: '',
+                icon: 'photo_album',
                 route: {
                     path: '/albums'
                 }
@@ -58,7 +58,7 @@ export let state = () => {
             {
                 boxId: 3,
                 name: '募捐',
-                icon: '',
+                icon: 'toys',
                 route: {
                     path: '/volunteer'
                 }
@@ -66,7 +66,7 @@ export let state = () => {
             {
                 boxId: 4,
                 name: '设置',
-                icon: '',
+                icon: 'settings',
                 route: {
                     path: '/setting'
                 }

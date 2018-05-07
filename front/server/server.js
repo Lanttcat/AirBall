@@ -7,7 +7,7 @@ const oneBcrypt = require('./oneBcrypt');
 
 let user = require('./api/user');
 let article = require('./api/article');
-let scenicspot = require('./api/scenicspot');
+// let scenicspot = require('./api/scenicspot');
 let Match = require('./api/match.js');
 const jwt = require('jsonwebtoken');
 
@@ -147,6 +147,7 @@ route.post('/api/article', async (ctx) => {
 // 步行街获取文章列表，根据uptime排序
 route.get('/api/allArticle', async (ctx) => {
     let lastTime = ctx.query.lastTime;
+    console.log(lastTime)
     let res = await article.selectAllArticle(lastTime);
     ctx.response.type = 'json';
     ctx.response.body = {
@@ -166,24 +167,24 @@ route.get('/api/article', async (ctx) => {
 });
 
 // 获取景点
-route.get('/api/scenicspot', async (ctx) => {
-    let num = ctx.query.num;
-    console.log(num);
-    let res = await scenicspot.selectSomeScenicspot(num);
-    ctx.response.type = 'json';
-    ctx.response.body = {
-        data: res
-    };
-});
-route.get('/api/scenicspotList', async (ctx) => {
-    let id = ctx.query.id;
-    console.log(id);
-    let res = await scenicspot.selectScenicspot(id);
-    ctx.response.type = 'json';
-    ctx.response.body = {
-        data: res
-    };
-});
+// route.get('/api/scenicspot', async (ctx) => {
+//     let num = ctx.query.num;
+//     console.log(num);
+//     let res = await scenicspot.selectSomeScenicspot(num);
+//     ctx.response.type = 'json';
+//     ctx.response.body = {
+//         data: res
+//     };
+// });
+// route.get('/api/scenicspotList', async (ctx) => {
+//     let id = ctx.query.id;
+//     console.log(id);
+//     let res = await scenicspot.selectScenicspot(id);
+//     ctx.response.type = 'json';
+//     ctx.response.body = {
+//         data: res
+//     };
+// });
 // 比赛相关请求
 let match = new Match();
 route.get('/api/match', async (ctx) => {

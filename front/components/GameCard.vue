@@ -1,6 +1,7 @@
 <template>
     <v-layout row wrap class="game-card">
         <div
+            v-if="match.length!==0"
             v-for="item in match"
             :key='item.id'
             class="game-list">
@@ -27,6 +28,12 @@
                 </v-layout>
             </v-flex>
         </div>
+        <div
+            v-else>
+            <v-flex xs12>
+                <p>没有比赛了</p>
+            </v-flex>
+        </div>
     </v-layout>
 </template>
 <script>
@@ -47,6 +54,7 @@ export default {
     .game-card-item
         padding 4px
         background #fff
+        min-height 110px
 
         p
             margin-bottom 4px

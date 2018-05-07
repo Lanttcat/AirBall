@@ -1,6 +1,6 @@
 <template>
     <v-layout row wrap class="game-card">
-        <v-subheader>{matchInfo.date}</v-subheader>
+        <!-- <v-subheader>{matchInfo.mat}</v-subheader> -->
         <v-flex xs8 class="game-card-item">
             <v-flex xs12>
                 <p class="game-card-title">常规赛</p>
@@ -8,18 +8,18 @@
             <v-layout row class="game-card-content">
                 <v-flex xs4>
                     <v-avatar size="36px" tile>
-                        <img :src="matchInfo.match.home_club_logo" alt="主队logo">
+                        <img :src="matchInfo.home_club_logo" alt="主队logo">
                     </v-avatar>
-                    <p class="game-name">{matchInfo.match.homeClubName}</p>
+                    <p class="game-name">{{matchInfo.homeClubName}}</p>
                 </v-flex>
                 <v-flex xs4>
-                    <p class="game-time">{matchInfo.match.matchTime | timeChange}</p>
+                    <p class="game-time">{{matchInfo.matchTime | timeChange}}</p>
                 </v-flex>
                 <v-flex xs4>
                     <v-avatar size="36px" tile>
-                        <img :src="matchInfo.match.guest_club_logo" alt="客队logo">
+                        <img :src="matchInfo.guest_club_logo" alt="客队logo">
                     </v-avatar>
-                    <p class="game-name">{matchInfo.match.guestClubName}</p>
+                    <p class="game-name">{{matchInfo.guestClubName}}</p>
                 </v-flex>
             </v-layout>
         </v-flex>

@@ -22,9 +22,11 @@
             </div>
             <div 
                 v-if="isShowInputSearch"
-                class="app-header-middle" v-cloak>
+                class="app-header-middle"
+                @click="toSearch"
+                v-cloak>
                 <slot name="title">
-                    <input @click.native="handleClick('action', {actionIdx, route: action.route})" class="app-header-search" placeholder="搜索球员或咨询等" type="text">
+                    <input @click.native="handleClick('action', {actionIdx, route: 'search'})" class="app-header-search" placeholder="搜索球员或咨询等" type="text">
                 </slot>
             </div>
             <div
@@ -93,6 +95,9 @@ export default {
             if (route) {
                 this.$router.push(route);
             }
+        },
+        toSearch() {
+            this.$router.push('search');
         }
     }
 };

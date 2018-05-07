@@ -1,8 +1,9 @@
 let config = {
-	mongodbConfig: {
-        username: '',
-        password: '',
-        dbName: ''
+	mongodb: {
+        host: '123.207.150.130',
+        port: '27017',
+        username: 'kevin',
+        password: '19951024kevinA'
     },
     mysql: {
         connectionLimit: 10,

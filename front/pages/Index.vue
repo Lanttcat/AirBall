@@ -6,45 +6,23 @@
             <game-card :match="matchList"></game-card>
         </v-layout>
         <!-- 步行街 用于缓冲用户文章，筛选后推荐值首页 -->
-        <div @click="toStreet">
-            <p>步行街</p>
-        </div>
+        <!-- <div @click="toStreet">
+            <div class="headline">步行街</div>
+        </div> -->
         <v-container grid-list-md text-xs-center class="home-feed">
-            <!-- 一般三到四个 -->
-            <!-- <v-layout
-                v-for="item in ssList"
-                :key="item._id"
+            <h2 style="text-align: left">社区办公室</h2>
+            <div v-for="item in articleList" :key="item.id">
+            <v-layout
                 row
                 class="card-item">
-                <v-flex xs6>
-                  <div style="text-align: left">
-                    <div class="headline" @click="TurnToArticle(item._id)">{{ item.name }}</div>
-                    <div class="headline-sub">{{ item.intro }}</div>
-                    <v-chip
-                        v-for="tag in item.tag"
-                        :key="tag.id"
-                        outline
-                        class="item-tag"
-                        color="red">
-                        {{tag}}
-                    </v-chip>
-                  </div>
-                </v-flex>
-                <v-flex x6>
-                    <img :src="item.imgSrc">
-                    <div>
-                        <span>{{ item.browserNumber }}</span>
-                        <span>{{ item.zanNumber }}</span>
-                    </div>
-                </v-flex>
-            </v-layout> -->
-            <h2 style="text-align: left">社区办公室</h2>
-            <v-layout row class="card-item">
                 <v-flex xs7>
-                  <div style="text-align: left">
-                    <div class="subheading" @click="TurnToArticle('11')">恩比德对位分析，该怎么限制</div>
+                  <div style="text-align: left" class="card-item_div">
+                    <div class="subheading" @click="TurnToArticle('11')">{{item.title}}</div>
                     <!-- <div>两天的时间在济南其实足够了，并且冬天济南</div> -->
-                    <v-chip outline color="red">
+                    <v-chip
+                        outline
+                        color="red"
+                        @click="toSearch">
                         <!-- <v-icon left>label</v-icon> -->
                         去处
                     </v-chip>
@@ -66,13 +44,14 @@
                     </div>
                 </v-flex>
             </v-layout>
+            </div>
         </v-container>
     </div>
 </template>
 
 <script>
-import loaclHeader from '../components/LocalBanner'
-import gameCard from '../components/gameCard'
+import loaclHeader from '@/components/LocalBanner'
+import gameCard from '@/components/GameCard'
 
 import {mapActions, mapMutations} from 'vuex';
 function setState(store) {
@@ -98,23 +77,8 @@ export default {
     name: 'index',
     data () {
         return {
-
             matchList: [],
-            ssList: [],
-            items: [
-                {
-                    src: '../static/img/testimg/1.JPG'
-                },
-                {
-                    src: '../static/img/testimg/1.JPG'
-                },
-                {
-                    src: '../static/img/testimg/1.JPG'
-                },
-                {
-                    src: '../static/img/testimg/1.JPG'
-                }
-            ]
+            articleList: []
         }
     },
     components: {
@@ -142,31 +106,23 @@ export default {
                 days: 3
             }
         }).then(({data}) => {
-            console.log(data.data);
+            // console.log(data.data);
             if(data.data.length > 0) {
                 this.storeMatchList(data.data);
                 this.matchList = data.data.slice(0, 4);
                 console.log(this.matchList);
             }
         });
-        // this.$http.get("/api/scenicspot", {
-        //     params: {
-        //         num: 3
-        //     }
-        // }).then(
-        //     ({data}) => {
-        //         console.log(data);
-        //         if (data.data.status) {
-        //             this.ssList = data.data.data;
-        //             console.log(this.status)
-        //             console.log(data);
-        //             // this.setMsgTip({msgSwitch: true, msgText: '验证码发送成功'});
-        //         }
-        //         else {
-        //             // this.setMsgTip({msgSwitch: true, msgText: '获取列表失败'});
-        //         }
-        //     }
-        // );
+
+
+        // 加载文章列表
+        this.$http.get("/api/allArticle", {}).then(({data}) => {
+            console.log(data.data);
+            if(data.data.data.length > 0) {
+                this.articleList = data.data.data;
+                console.log(this.articleList);
+            }
+        });
     },
     methods: {
         ...mapMutations('match/list', [
@@ -202,6 +158,9 @@ export default {
         },
         toStreet() {
             this.$router.push('/main/street');
+        },
+        toSearch() {
+            this.$router.push('search')
         }
     }
 };
@@ -227,6 +186,9 @@ export default {
         height 11rem
         border-bottom 1px solid $colorBorder
         box-shadow none
+
+        .card-item_div
+            padding 0.5rem
 
         .headline
             height 5rem
@@ -254,6 +216,9 @@ export default {
         padding 8px
         border-radius 3px
         background #E8F5E9
+    
+    .headline
+        padding 0.5rem auto
 </style>
 <style>
 #app .chip .chip__content{

@@ -3,6 +3,7 @@
  */
 
 let mongo = require('mongoose');
+mongo.connect('mongodb://kevin:19951024kevinA@123.207.150.130:27017/article');
 
 
 
@@ -122,7 +123,7 @@ let article = {
         console.log(condition);
         // 查询文章
         try {
-            let res = await Article.find(condition).sort({updateTime: -1}).limit(5);
+            let res = await Article.find(condition).sort({"updateTime": -1}).limit(5);
             // let res = await Article.queryArticle(articleId);
             // console.log(res);
             result.message = '获取文章成功';

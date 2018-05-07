@@ -4,9 +4,17 @@
  *
  * */
 
+let mongo = require('../model/mongodb.js');
+
+let db = mongo('match_prodict');
+
 class Prodict{
     constrctor() {
 
+    }
+
+    do(gameid, userid, isBelieve) {
+        // 把预测列表写进mongodb，按时进行计算
     }
     validGameId() {
 

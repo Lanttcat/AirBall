@@ -40,7 +40,7 @@
     </v-form>
 </template>
 <script>
-import datePicker from '@/components/datePicker';
+import datePicker from '@/components/DatePicker.vue';
 export default {
     data: () => ({
         dialog: false,

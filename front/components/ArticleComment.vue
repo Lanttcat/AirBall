@@ -61,7 +61,7 @@
 </template>
 <script>
 import VueImgInputer from 'vue-img-inputer'
-import imgUpload from './imgUpload'
+import imgUpload from '@/components/ImgUpload'
 import { mapState } from 'vuex';
 export default {
     name: 'article-comment',

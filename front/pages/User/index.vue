@@ -1,49 +1,53 @@
 <template>
     <div>
-        <!-- 未登录界面 -->
-        <!-- <user-title class="home-feed"></user-title> -->
-
-        <!-- 登录界面 -->
         <v-container
-            v-if="userInfo.status === 1"
-            grid-list-md text-xs-center
             class="home-feed">
             <v-layout row class="card-item">
                 <v-flex xs12>
                     <v-card flat>
-                        <v-list two-line subheader>
+                        <v-list>
                             <v-list-tile>
                                 <v-list-tile-avatar>
                                      <img src="../../static/img/test_head.jpg">
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                <v-list-tile-title>{{ userInfo.uname }}</v-list-tile-title>
-                                <v-list-tile-sub-title>{{ userInfo.uIntro}}</v-list-tile-sub-title>
+                                    <v-list-tile-title>{{ userInfo.uname }}</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{ userInfo.uIntro}}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
-                                <v-btn icon ripple>
-                                    <v-icon
-                                        color="grey lighten-1"
-                                        @click='toRepu'>
-                                        info
-                                    </v-icon>
-                                </v-btn>
+                                    <v-list-tile-title>
+                                        <v-list-tile-action-text>我的主页</v-list-tile-action-text>
+                                        <v-icon>navigate_next</v-icon>
+                                    </v-list-tile-title>
                                 </v-list-tile-action>
                             </v-list-tile>
                         </v-list>
                     </v-card>
-                    <v-card flat>
-                        <v-btn
-                            flat
-                            color="yellow"
-                            class="white--text">
-                            Upload
-                            <v-icon right dark>edit</v-icon>
-                        </v-btn>
-
-                    </v-card>
                 </v-flex>
             </v-layout>
+            <!-- <v-layout row class="card-item">
+                <v-flex xs12>
+                    <v-card flat>
+                        <v-list>
+                            <v-list-tile>
+                                <v-list-tile-avatar>
+                                     <img src="../../static/img/test_head.jpg">
+                                </v-list-tile-avatar>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>{{ userInfo.uname }}</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{ userInfo.uIntro}}</v-list-tile-sub-title>
+                                </v-list-tile-content>
+                                <v-list-tile-action>
+                                    <v-list-tile-title>
+                                        <v-list-tile-action-text>我的主页</v-list-tile-action-text>
+                                        <v-icon>navigate_next</v-icon>
+                                    </v-list-tile-title>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </v-list>
+                    </v-card>
+                </v-flex>
+            </v-layout> -->
         </v-container>
         <v-container style="width:100%;padding:0;margin-top:1rem">
             <v-layout row wrap>
@@ -58,7 +62,7 @@
                                 icon flat x-large
                                 @click="turnToSubPage(item.id, item.route)"
                                 style="position: relativel;top:10px">
-                                <v-icon class="app-header-icon">star</v-icon>
+                                <v-icon class="app-header-icon">{{item.icon}}</v-icon>
                             </v-btn>
                             <div>
                                 <v-btn flat small>{{ item.name }}</v-btn>
@@ -76,13 +80,13 @@
                 v-for="item in boxList2"
                 :key="item.id"
                 >
-                <v-card flat tile class="user-setting_item">
+                <v-card flat tile class="user-setting_item"
+                    @click="turnToSubPage(item.id, item.route)">
                     <v-flex full-height>
                         <v-btn
                             icon flat x-large
-                            @click="turnToSubPage(item.id, item.route)"
                             style="position: relativel;top:10px">
-                            <v-icon class="app-header-icon">star</v-icon>
+                            <v-icon class="app-header-icon">{{item.icon}}</v-icon>
                         </v-btn>
                         <div>
                             <v-btn flat small>{{ item.name }}</v-btn>
@@ -162,6 +166,10 @@ export default {
         toLogin() {
             console.log(this.$router);
             this.$router.replace('Login');
+
+            while(30) {
+                console.log("计算机冠军");
+            }
         },
         turnToSubPage(id, route) {
             this.$router.push(route);
@@ -178,6 +186,9 @@ export default {
  #app
     .app-view-with-header
         top 0
+    
+    .btn
+        min-width 0
 .content {
     display: flex;
     align-items: center;
@@ -213,6 +224,7 @@ export default {
 }
 
 .user-setting_item {
+    box-sizing border-box
     height: 100px;
     border-right: 1px $colorBorder solid;
     border-bottom: 1px $colorBorder solid;

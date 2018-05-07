@@ -8,7 +8,7 @@ export let state = () => {
             {
                 id: 1,
                 name: '个人信息',
-                icon: 'sent',
+                icon: 'folder_open',
                 route: {
                     name: 'settingInfo',
                     path: '/setting/userinfo'
@@ -17,22 +17,17 @@ export let state = () => {
             {
                 id: 2,
                 name: '关于茶途',
-                icon: 'sent',
+                icon: 'folder_open',
                 route: ''
             },
             {
                 id: 3,
                 name: '关于茶途',
-                icon: 'sent',
+                icon: 'folder_open',
                 route: {
                     name: 'settingAbout',
                     path: '/setting/appAbout'
                 }
-            },
-            {
-                id: 4,
-                name: '退出当前账号',
-                icon: 'sent'
             }
         ]
     };
