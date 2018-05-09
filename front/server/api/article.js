@@ -20,6 +20,7 @@ let articleSchema = new Schema({
     id: Number,
     title: String,
     authorId: String,
+    authorName: String,
     content: String,
     tags: [String],
     status: Number,
@@ -46,7 +47,7 @@ let articleSchema = new Schema({
     collection: 'article'
 });
 
-let Article = mongo.model('article', articleSchema);
+let ArticleModel = mongo.model('article', articleSchema);
 
 articleSchema.statics.queryArticle = async function(aid) {
     let data = {};
@@ -56,24 +57,14 @@ articleSchema.statics.queryArticle = async function(aid) {
     return res;
 };
 
-// 关闭连接
-// mongoose.disconnect();
-
-/**
- * 查询当前文章的所有评论
- */
-// function queryAllComment(aid) {
-
-// }
-// addComment({userId: 4444});
-
-let article = {
-    addArticle: async (info) => {
+class Article {
+    async addArticle (info) {
         // 文章发布操作
         let result = {};
-        let newArticle = new Article({
+        let newArticle = new ArticleModel({
             title: info.title,
             authorId: info.authorId,
+            authorName: info.authorName || 'Airball官方',
             content: info.content,
             tags: info.tags,
             creatTime: (new Date().getTime()),
@@ -91,13 +82,13 @@ let article = {
         }
         console.log(result);
         return result;
-    },
-    selectArticle: async (articleId) => {
+    }
+    async selectArticle(articleId) {
         // 步行街获取文章根据更新时间排列
         let result = {};
         // 查询文章
         try {
-            let res = await Article.find({
+            let res = await ArticleModel.find({
                 _id: articleId
             });
             // let res = await Article.queryArticle(articleId);
@@ -112,8 +103,8 @@ let article = {
 
         }
         return result;
-    },
-    selectAllArticle: async (lastTime) => {
+    }
+    async selectAllArticle(lastTime) {
         // 步行街获取文章根据更新时间排列
         // 先根据时间戳计算，后期需要优化
 
@@ -123,7 +114,7 @@ let article = {
         console.log(condition);
         // 查询文章
         try {
-            let res = await Article.find(condition).sort({"updateTime": -1}).limit(5);
+            let res = await ArticleModel.find(condition).sort({"updateTime": -1}).limit(5);
             // let res = await Article.queryArticle(articleId);
             // console.log(res);
             result.message = '获取文章成功';
@@ -137,23 +128,23 @@ let article = {
 
         }
         return result;
-    },
-    selectComment: (body) => {
+    }
+    selectComment(body) {
         // 读取评论
 
-    },
-    selectZan: (body) => {
+    }
+    selectZan(body) {
         // 读取点赞数量
 
-    },
-    addComment: async (articleId, commentInfo) => {
+    }
+    async addComment (articleId, commentInfo) {
         let result = {};
         // 参考文章
         // https://codeday.me/bug/20180204/128355.html
         // https://cnodejs.org/topic/548e54d157fd3ae46b233502
         // 添加评论
         try {
-            let doc = await Article.findOneAndUpdate(articleId);
+            let doc = await ArticleModel.findOneAndUpdate(articleId);
             result.status = true;
             result.doc = doc;
             result.message = '评论成功';
@@ -164,12 +155,12 @@ let article = {
         }
 
         return result;
-    },
-    addZan: () => {
+    }
+    addZan() {
         // 增加点赞
-    },
-    insertMany: (data) => {
-        Article.insertMany(data, function(error, doc) {
+    }
+    insertMany(data) {
+        ArticleModel.insertMany(data, function(error, doc) {
             if (error) {
                 console.log(error);
             }
@@ -179,6 +170,6 @@ let article = {
         })
     }
 
-};
+}
 
-module.exports = article;
+module.exports = Article;

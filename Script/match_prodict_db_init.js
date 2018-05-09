@@ -9,6 +9,7 @@ let matchProdictSchema = new Schema({
     id: Number,
     title: String,
     authorId: String,
+    authorName: String,
     content: String,
     tags: [String],
     status: Number,

@@ -5,7 +5,8 @@
 
 import Vue from 'vue';
 import Meta from 'vue-meta';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from './axios.js';
 
 import {createRouter} from '@/.lavas/router';
 import {createStore} from '@/.lavas/store';

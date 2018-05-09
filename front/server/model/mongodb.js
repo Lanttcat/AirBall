@@ -2,6 +2,7 @@
  * 连接mongodb
  */
 let mongoose = require('mongoose');
+
 const config = require('../../config.js').mongodb;
 
 /**
@@ -10,9 +11,11 @@ const config = require('../../config.js').mongodb;
  */
 function mongo(database) {
     let str = `mongodb://${config.username}:${config.password}@${config.host}:${config.port}/${database}`;
-    let db = await mongoose.createConnection(str);
+    console.log(str);
+    // mongo.connect('mongodb://kevin:19951024kevinA@123.207.150.130:27017/article');
+    mongoose.connect(str);
 
-    return db;
+    return mongoose;
 }
 
 module.exports = mongo;

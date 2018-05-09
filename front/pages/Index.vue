@@ -11,14 +11,16 @@
         </div> -->
         <v-container grid-list-md text-xs-center class="home-feed">
             <h2 style="text-align: left">社区办公室</h2>
-            <div v-for="item in articleList" :key="item.id">
+            <div v-for="item in articleList" :key="item._id">
             <v-layout
                 row
                 class="card-item">
                 <v-flex xs7>
                   <div style="text-align: left" class="card-item_div">
-                    <div class="subheading" @click="TurnToArticle('11')">{{item.title}}</div>
-                    <!-- <div>两天的时间在济南其实足够了，并且冬天济南</div> -->
+                    
+                    <div class="subheading" @click="TurnToArticle(item._id)">
+                        {{item.title}}
+                    </div>
                     <v-chip
                         outline
                         color="red"
@@ -148,7 +150,8 @@ export default {
             );
         },
         TurnToArticle: function (id) {
-            console.log(1111)
+            // 传递id，详情页通过id获取文章
+
             this.$router.push({
                 path: 'article',
                 query: {

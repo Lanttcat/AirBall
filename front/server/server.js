@@ -6,13 +6,14 @@ const Router = require('koa-router');
 const oneBcrypt = require('./oneBcrypt');
 
 let user = require('./api/user');
-let article = require('./api/article');
+let Article = require('./api/article');
 // let scenicspot = require('./api/scenicspot');
 let Match = require('./api/match.js');
 const jwt = require('jsonwebtoken');
 
 let route = new Router();
 
+let article = new Article();
 const secret = 'oneStep_secret';
 
 // 用户相关---------------------------------------------------------------------------
@@ -73,10 +74,8 @@ route.post('/api/user', async (ctx) => {
 // 登录
 route.put('/api/user', async (ctx) => {
     const {body} = ctx.request;
-    console.log(body);
     try {
         const userInfo = await user.login(body);
-        console.log(userInfo.length);
         if (userInfo.length < 1) {
             ctx.status = 200;
             ctx.body = {
@@ -96,9 +95,10 @@ route.put('/api/user', async (ctx) => {
                 user: userInfo[0],
                 // 生成 token 返回给客户端
                 token: jwt.sign({
-                    data: userInfo[0].uphone,
+                    aid: userInfo[0].aid,
+                    phone: userInfo[0].phone,
                     // 设置 token 过期时间
-                    exp: Math.floor(Date.now() / 1000) + (60 * 60), // 60 seconds * 60 minutes = 1 hour
+                    exp: Math.floor(Date.now() / 1000) + (60 * 60 * 5), // 60 seconds * 60 minutes = 1 hour
                 }, secret)
             };
         }
@@ -147,7 +147,6 @@ route.post('/api/article', async (ctx) => {
 // 步行街获取文章列表，根据uptime排序
 route.get('/api/allArticle', async (ctx) => {
     let lastTime = ctx.query.lastTime;
-    console.log(lastTime)
     let res = await article.selectAllArticle(lastTime);
     ctx.response.type = 'json';
     ctx.response.body = {
@@ -158,8 +157,9 @@ route.get('/api/allArticle', async (ctx) => {
 
 route.get('/api/article', async (ctx) => {
     let articleId = ctx.query.articleId;
-    console.log(articleId);
+    // console.log(ctx.state.user);
     let res = await article.selectArticle(articleId);
+
     ctx.response.type = 'json';
     ctx.response.body = {
         data: res

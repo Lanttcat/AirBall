@@ -4,26 +4,30 @@
             <v-card flat>
                 <v-card-media :src="info.imgSrc || '../../static/img/testimg/default.jpg'" height="200px">
                 </v-card-media>
-                <v-card-title primary-title>
+                <v-card-title primary-title v-if="info.title">
                     <div>
                         <h3 class="headline mb-0">{{ info.title }}</h3>
-                        <h3 class="headline mb-0">测试标题</h3>
                         <div>
-                            <span>time</span>
-                            <span @click='turnToAuthor'>作者</span>
+                            <span>{{ info.creatTime | timeTransform }}</span>
+                            <span @click='turnToAuthor'>作者: {{info.authorName}}</span>
                         </div>
                         <div>{{ info.intro }}</div>
                     </div>
                 </v-card-title>
                 <v-card-title primary-title>
-                    <div>
+                    <div v-if="info.content">
+                        <p>
+                            {{info.content}}
+                        </p>
+                    </div>
+                    <div v-else>
                         <h3 class="headline mb-0">文章加载失败^_^</h3>
                     </div>
                 </v-card-title>
                 <div class="text-xs-right">
                     <v-btn flat @click="upComment" color="orange">评论</v-btn>
-                    <v-btn flat color="orange">收藏</v-btn>
-                    <v-btn flat color="orange">举报</v-btn>
+                    <v-btn flat color="orange" @click="collectBtn(info._id)">收藏</v-btn>
+                    <v-btn flat color="orange" @click="reportBtn(info._id)">举报</v-btn>
                 </div>
                 <v-list two-line>
                     <template v-if="info.commentArray">
@@ -119,6 +123,12 @@ export default {
             console.log(this.$router)
             // 获取文章id
             this.$router.push('/user/user-home');
+        },
+        collectBtn(id) {
+            
+        },
+        reportBtn(id) {
+
         }
     },
     async asyncData({ store, route }) {
@@ -129,24 +139,31 @@ export default {
     },
     created() {
         console.log(this.$route.query.id)
-        this.$http.get("/api/scenicspotList", {
+        this.$http.get("/api/article", {
             params: {
-                id: this.$route.query.id
+                articleId: this.$route.query.id
             }
         }).then(
             ({data}) => {
-                console.log(data);
+
                 if (data.data.status) {
                     this.info = data.data.data[0];
-                    console.log(this.status)
-                    console.log(data);
-                    // this.setMsgTip({msgSwitch: true, msgText: '验证码发送成功'});
+                    console.log(this.info);
                 }
                 else {
                     // this.setMsgTip({msgSwitch: true, msgText: '获取列表失败'});
                 }
             }
         );
+    },
+    filters: {
+        timeTransform(value) {
+            let time = new Date(value);
+            
+            let formatTime = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()}:${time.getHours()}时`
+            console.log(formatTime)
+            return formatTime;
+        }
     }
 }
 </script>
