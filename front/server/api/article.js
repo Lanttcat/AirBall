@@ -2,9 +2,10 @@
  * 文章相关操作
  */
 
-let mongo = require('mongoose');
-mongo.connect('mongodb://kevin:19951024kevinA@123.207.150.130:27017/article');
+let mongoose = require('../model/mongodb.js');
+let query = require('../model/query');
 
+let mongo = mongoose('article');
 
 
 let Schema = mongo.Schema;
@@ -26,9 +27,10 @@ let articleSchema = new Schema({
     status: Number,
     commentArray: [
         {
-            userId: Number,
+            userId: String,
+            userV: String,
             userName: String,
-            parentNodeId: Number,
+            parentNodeId: String,
             parentNodeName: String,
             content: String,
             count: Number,
@@ -129,6 +131,33 @@ class Article {
         }
         return result;
     }
+    
+    /**
+     * 添加收藏
+     * @param {String} aid 用户id
+     * @param {String} articleId 文章id
+     */
+    async addCollect(body) {
+        let str = `insert into article_collect (articleId, aid, name, author) value ('${body.articleId}', '${body.aid}', '${body.title}', '${body.author}');`;
+        try {
+            let res = await query(str);
+            return true;
+        }
+        catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+
+    /**
+     * 取消收藏
+     * @param {String} aid 用户id
+     * @param {String} articleId 文章id
+     */
+    async delCollect(aid, articleId) {
+
+    }
+
     selectComment(body) {
         // 读取评论
 
@@ -137,7 +166,27 @@ class Article {
         // 读取点赞数量
 
     }
-    async addComment (articleId, commentInfo) {
+
+     /**
+     * 添加评论
+     * @param {Object} body 评论信息集合
+     */
+    async addComment(id, commentInfo) {
+        let result = {};
+        try {
+            let doc = await ArticleModel.update({'_id':id}, {'$push':{'commentArray': commentInfo}});
+            result.status = true;
+            result.doc = doc;
+            console.log(result);
+            result.message = '评论成功';
+        }
+        catch (e) {
+            console.log(e);
+            result.message = '评论失败';
+        }
+        return result;
+    }
+    async findComment (articleId, commentInfo) {
         let result = {};
         // 参考文章
         // https://codeday.me/bug/20180204/128355.html

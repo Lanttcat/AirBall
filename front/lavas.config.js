@@ -113,7 +113,7 @@ module.exports = {
     // 中间件
     middleware: {
         all: [], // 同时运行在客户端和服务端
-        client: ['jwt'], // 仅客户端
+        client: ['jwt', 'getUserInfo'], // 仅客户端
         server: [] // 仅服务端
     }
 };

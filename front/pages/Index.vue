@@ -114,6 +114,8 @@ export default {
                 this.matchList = data.data.slice(0, 4);
                 console.log(this.matchList);
             }
+        }).catch(() => {
+            console.log('ceshi')
         });
 
 
@@ -124,6 +126,8 @@ export default {
                 this.articleList = data.data.data;
                 console.log(this.articleList);
             }
+        }).catch(() => {
+            console.log('ceshi')
         });
     },
     methods: {

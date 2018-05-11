@@ -28,7 +28,7 @@ app.use(bodyParser())
         secret: 'oneStep_secret'
     })
     .unless({
-        path: [/\/login/, '/', /.js$/, /.png$/, /.jpg$/, /.woff2$/, /.tff$/, /.json$/, '/__webpack_hmr', '/api/user']
+        path: [/\/login/, '/', /.js$/, /.ico$/, /.png$/, /.jpg$/, /.woff2$/, /.tff$/, /.json$/, '/__webpack_hmr', '/api/user']
     }))
     
     // .use(async (ctx, next) => {

@@ -117,22 +117,40 @@ route.put('/api/user', async (ctx) => {
 
 });
 
+// 二次进入网站获取用户信息
+route.get('/api/userInfo', async (ctx) => {
+    // 验证码
+    let aid = ctx.state.user.aid;
+    console.log(aid)
+    try {
+        const userInfo = await user.getUserInfoById(aid);
+            ctx.status = 200;
+            ctx.body = {
+                status: true,
+                userInfo: userInfo
+            };
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
 // 文章相关------------------------------------------------------------------------
 
-route.post('/api/comment', async (ctx) => {
-    let commentInfo = {};
-    let {body} = ctx.request;
-    commentInfo.userId = body.userId;
-    commentInfo.content = body.content;
-    commentInfo.parentNodeId = body.parentNodeId;
+// route.post('/api/comment', async (ctx) => {
+//     let commentInfo = {};
+//     let {body} = ctx.request;
+//     commentInfo.userId = body.userId;
+//     commentInfo.content = body.content;
+//     commentInfo.parentNodeId = body.parentNodeId;
 
-    let res = await article.addComment(body.articleId, commentInfo);
-    console.log(res);
-    ctx.response.type = 'json';
-    ctx.response.body = {
-        data: res
-    };
-});
+//     let res = await article.addComment(body.articleId, commentInfo);
+//     console.log(res);
+//     ctx.response.type = 'json';
+//     ctx.response.body = {
+//         data: res
+//     };
+// });
 
 // 存文章
 route.post('/api/article', async (ctx) => {
@@ -141,6 +159,17 @@ route.post('/api/article', async (ctx) => {
     ctx.response.type = 'json';
     ctx.response.body = {
         data: res
+    };
+});
+
+// 收藏
+route.post('/api/collection', async (ctx) => {
+    let {body} = ctx.request;
+    let res = await article.addCollect(body);
+    ctx.response.type = 'json';
+    ctx.response.body = {
+        msg: '收藏成功',
+        status: true
     };
 });
 
@@ -166,6 +195,15 @@ route.get('/api/article', async (ctx) => {
     };
 });
 
+// 评论
+route.post('/api/comment', async (ctx) => {
+    console.log('cddddddddddddddddddddd');
+    let {body} = ctx.request;
+    console.log(body);
+    let res = await article.addComment(body.id, body.commentInfo);
+    ctx.response.type = 'json';
+    ctx.response.body = res;
+});
 // 获取景点
 // route.get('/api/scenicspot', async (ctx) => {
 //     let num = ctx.query.num;

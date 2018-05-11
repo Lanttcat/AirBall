@@ -11,7 +11,7 @@ export let state = () => {
         userInfo: {
             status: 1,
             phone: 1111,
-            aid: '',
+            aid: null,
             name: '',
             age: null,
             site: '',
@@ -36,7 +36,6 @@ export const actions = {
      * @param {Object} appHeader appHeader
      */
     setUserInfo({commit}, userData) {
-        // console.log(userData);
         commit('syncUserInfo', userData);
     }
 };

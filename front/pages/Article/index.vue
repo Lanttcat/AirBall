@@ -1,5 +1,5 @@
 <template>
-    <v-layout>
+    <v-layout style="margin-bottom: 56px">
         <v-flex xs12>
             <v-card flat>
                 <v-card-media :src="info.imgSrc || '../../static/img/testimg/default.jpg'" height="200px">
@@ -26,21 +26,22 @@
                 </v-card-title>
                 <div class="text-xs-right">
                     <v-btn flat @click="upComment" color="orange">评论</v-btn>
-                    <v-btn flat color="orange" @click="collectBtn(info._id)">收藏</v-btn>
+                    <v-btn flat color="orange" @click="collectBtn(info._id)">{{ collectStatusMsg }}</v-btn>
                     <v-btn flat color="orange" @click="reportBtn(info._id)">举报</v-btn>
                 </div>
                 <v-list two-line>
-                    <template v-if="info.commentArray">
-                        <v-subheader>这些评论亮了</v-subheader>
+                    <template v-if="commenetShow">
+                        <v-subheader>评论</v-subheader>
                         <v-list-tile-content>
                             <v-list-tile-title></v-list-tile-title>
-                            <v-list-tile-sub-title>
+                            <v-list-tile-sub-title class="px-5">
                                 暂时还没有评论，快来抢沙发吧
                             </v-list-tile-sub-title>
                         </v-list-tile-content>
                     </template>
                     <template v-else>
-                        <comments></comments>
+                        <v-subheader>这些评论亮了</v-subheader>
+                        <comments :comments="comments"></comments>
                     </template>
                 </v-list>
             </v-card>
@@ -73,9 +74,46 @@
                                 v-model="content"
                                 counter='100'
                             ></v-text-field>
-                            <div>
-                                <span>规范协议</span>
-                            </div>
+                            <!-- <span color="warning"> </span> -->
+                            <v-alert
+                                :value="true"
+                                outline color="warning"
+                                icon="priority_high"
+                                class="py-1">
+                                请遵守相关的规范协议
+                            </v-alert>
+                        </v-flex>
+                    </v-layout>
+                </v-card>
+            </v-bottom-sheet>
+            <v-bottom-sheet v-model="dialogReport">
+                <v-card tile>
+                    <v-toolbar card light>
+                        <v-btn icon @click="closeCard">
+                            <v-icon>close</v-icon>
+                        </v-btn>
+                        <span class="headline">举报理由</span>
+                        <v-spacer></v-spacer>
+                        <v-toolbar-items>
+                            <v-btn icon @click="reportPublish">
+                                <v-icon>publish</v-icon>
+                            </v-btn>
+                        </v-toolbar-items>
+                    </v-toolbar>
+                    <v-layout class="comment-input">
+                        <v-flex xs12 align-center='false'>
+                            <v-text-field
+                                box
+                                light
+                                auto-grow
+                                rows='3'
+                                name="reportContent"
+                                label="填写举报理由"
+                                textarea
+                                color="grey lighten-3"
+                                v-model="reportContent"
+                                counter='100'
+                            ></v-text-field>
                         </v-flex>
                     </v-layout>
                 </v-card>
@@ -102,7 +140,15 @@ export default {
         return {
             info: [],
             content: '',
-            dialog: false
+            commentWarning: '',
+            comments: [],
+            commenetShow: true,
+            commentPublishFlag: true, // 评论是否可以发送
+            reportContent: '',
+            dialog: false,
+            dialogReport: false,
+            collectStatus: false,
+            collectStatusMsg: '收藏'
         }
     },
     components: {
@@ -111,25 +157,92 @@ export default {
     },
     methods: {
         upComment() {
-            this.dialog = true;
+            if (this.commentPublishFlag) {
+                this.dialog = true;
+            }
         },
         closeCard() {
             this.dialog = false;
+            this.dialogReport = false;
         },
         publish() {
             // 验证信息
+            let warningTxt = [
+                '最少七个字',
+                '最多255个字',
+                '评论失败，请稍候重试'
+            ];
+
+            if (this.content.length < 8) {
+                this.commentWarning = warningTxt[0];
+            }
+            if (this.content > 255) {
+                this.commentWarning = warningTxt[1];
+            }
+            
+            // 发送到服务器
+            this.$http.post("/api/comment", {
+                id: this.info._id,   // 文章id
+                commentInfo: {
+                    userId: this.userInfo.aid,
+                    userV: '',
+                    userName: this.userInfo.name,
+                    parentNodeId: '',
+                    parentNodeName: '',
+                    content: this.content,
+                    zanCount: 0
+                }
+            }).then(
+                ({data}) => {
+                    console.log(data);
+                    if (data.status) {
+                    }
+                    else {
+                        this.commentWarning = warningTxt[2];
+                    }
+                    // 将数据同步到store
+                },
+                (err) =>  {
+                    this.commentWarning = warningTxt[2];
+                }
+            );
+            // 本地显示
         },
         turnToAuthor() {
-            console.log(this.$router)
             // 获取文章id
             this.$router.push('/user/user-home');
         },
         collectBtn(id) {
-            
+            if(!this.collectStatus) {
+                this.$http.post("/api/collection", {
+                    aid: this.userInfo.aid,
+                    articleId: this.info._id,
+                    title: this.info.title,
+                    author: this.info.authorName
+                }).then(
+                    ({data}) => {
+                        if(data.status) {
+                            this.collectStatusMsg = '已收藏';
+                            this.collectStatus = true;
+                        }
+                    },
+                    (err) => {
+                        // that.setMsgTip({msgSwitch: true, msgText: '注册失败，请稍后再试'});
+                    }
+                );
+            }
         },
         reportBtn(id) {
+            this.dialogReport = true;
+        },
+        reportPublish() {
 
         }
+    },
+    computed: {
+        ...mapState('userStatus/userStatu', [
+            'userInfo'
+        ])
     },
     async asyncData({ store, route }) {
         setState(store);
@@ -138,7 +251,7 @@ export default {
         setState(this.$store);
     },
     created() {
-        console.log(this.$route.query.id)
+        // 获取文章信息
         this.$http.get("/api/article", {
             params: {
                 articleId: this.$route.query.id
@@ -148,7 +261,8 @@ export default {
 
                 if (data.data.status) {
                     this.info = data.data.data[0];
-                    console.log(this.info);
+                    this.comments = this.info.commentArray;
+                    this.commenetShow = this.comments.length > 0 ? false : true;
                 }
                 else {
                     // this.setMsgTip({msgSwitch: true, msgText: '获取列表失败'});
@@ -160,8 +274,7 @@ export default {
         timeTransform(value) {
             let time = new Date(value);
             
-            let formatTime = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()}:${time.getHours()}时`
-            console.log(formatTime)
+            let formatTime = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()}:${time.getHours()}时`;
             return formatTime;
         }
     }

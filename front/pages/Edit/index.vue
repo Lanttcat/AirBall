@@ -3,9 +3,9 @@
         <v-layout row wrap>
             <v-flex xs12>
                 <v-card>
-                    <v-toolbar style="height:8vh" flat>
-                        <v-icon  class="app-header-icon" @click.native="$router.go(-1)">arrow_back</v-icon>
-                        <v-toolbar-title>写攻略</v-toolbar-title>
+                    <v-toolbar style="height:4rem" flat>
+                        <v-icon  class="app-header-icon" @click="back">arrow_back</v-icon>
+                        <v-toolbar-title>写文章</v-toolbar-title>
                         <v-spacer></v-spacer>
                         <span class="add-btn" @click="review">预览</span>
                         <span class="add-btn">保存</span>
@@ -38,7 +38,7 @@
                                 single-line
                                 full-width
                                 hide-details
-                                style="height:9vh"
+                                style="height:4rem"
                                 ></v-text-field>
                             </v-flex>
                             <v-flex xs12>
@@ -155,6 +155,9 @@ export default {
             let set = new Set(this.tags);
             set.delete(item);
             this.tags = Array.from(set);
+        },
+        back() {
+            this.$router.go(-1);
         }
     },
     components: {

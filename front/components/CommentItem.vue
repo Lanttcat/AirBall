@@ -1,25 +1,25 @@
 <template>
     <v-list flat>
-        <div  v-for="item in comments" :key="item.id">
+        <div v-for="item in comments" :key="item.id">
             <v-list-tile>
                 <v-list-tile-avatar>
                 <img src="../static/img/testimg/default.jpg">
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                 <v-list-tile-title>
-                    湖人总冠军
+                    {{item.userName}}
                 </v-list-tile-title>
                 <v-list-tile-sub-title>
-                    认证信息
+                    {{item.userV}}
                 </v-list-tile-sub-title>
                 </v-list-tile-content>
             </v-list-tile>
             <div class="detail">
-                <div class="reply">
+                <div class="reply" v-if="item.parentNodeId">
                     <p>作者</p>
                     <p>回复内容</p>
                 </div>
-                评论信息
+                <p>{{item.content}}</p>
             </div>
             <v-layout class="toolbar">
                 
@@ -27,7 +27,7 @@
                         <v-flex xs12 flat>
                             <v-toolbar flat color="white">
                                 <v-btn>
-                                    <span>亮了</span>
+                                    <span>亮了({{item.zanCount}})</span>
                                     <!-- <v-icon></v-icon> -->
                                 </v-btn>
                                 <v-btn>
@@ -63,10 +63,10 @@
 <script>
 export default {
     name: 'comment-item',
+    props: ['comments'],
     data() {
         return {
-            sheet: false,
-            comments: ['ddd']
+            sheet: false
         }
     },
     methods: {

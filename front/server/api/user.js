@@ -79,6 +79,22 @@ let user = {
             console.log(e);
             return false;
         }
+    },
+
+    getUserInfoById: async (aid) => {
+        let sql = `select aid, phone, name, intro, site, age, avatar, repu 
+                from userbaseinfo 
+                where aid = '${aid}';`;
+        console.log(sql);
+        try {
+            let res = await query(sql);
+            console.log(res[0]);
+            return res[0];
+        }
+        catch (e) {
+            console.log(e);
+            return false;
+        }
     }
 };
 module.exports = user;

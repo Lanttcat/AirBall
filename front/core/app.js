@@ -21,9 +21,9 @@ Vue.use(Vuetify);
 
 Vue.use(ActionMonitor);
 
-Vue.prototype.$http = axios;
-
 Vue.config.productionTip = false;
+
+Vue.prototype.$http = axios;
 
 export function createApp() {
     let router = createRouter();
@@ -60,6 +60,52 @@ export function createApp() {
     });
 
     let store = createStore();
+
+    axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
+
+    //request拦截器
+    axios.interceptors.request.use(
+        config => {
+            //每次发送请求之前检测都vuex存有token,那么都要放在请求头发送给服务器
+            let token = storage.getItem('airball_token');
+            if(token){
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+            else {
+                router.replace({ //跳转到登录页面
+                    path: 'login',
+                    query: { redirect: router.currentRoute.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
+                });
+            }
+            return config;
+        },
+        err => {
+            router.replace({ //跳转到登录页面
+                path: 'login',
+                query: { redirect: router.currentRoute.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
+            });
+        }
+    );
+    //respone拦截器
+    axios.interceptors.response.use(
+        response => {
+            return response;
+        },
+        error => { //默认除了2XX之外的都是错误的，就会走这里
+            if(error.response){
+                switch(error.response.status){
+                    case 401:
+                        // store.dispatch('UserLogout'); //可能是token过期，清除它
+                        storage.removeItem('airball_token');
+                        router.replace({ //跳转到登录页面
+                            path: 'login',
+                            query: { redirect: router.currentRoute.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
+                        });
+                }
+            }
+            return '认证失败'
+        }
+    );
     let App = Vue.extend({
         router,
         store,
