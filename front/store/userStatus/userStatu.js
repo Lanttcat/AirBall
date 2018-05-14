@@ -18,7 +18,8 @@ export let state = () => {
             age: null,
             site: '',
             intro: '',
-            repu: 0
+            repu: 0,
+            avatar: 'http://p8p6o46oy.bkt.clouddn.com/default_uesr_title.jpg'
         }
     };
 };

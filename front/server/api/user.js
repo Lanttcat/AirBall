@@ -4,6 +4,7 @@
 
 let query = require('../model/query');
 let crypto = require('crypto');  //加载crypto库
+let qiniu = require('qiniu');
 
 /**
  * 云通信基础能力业务短信发送、查询详情。
@@ -13,9 +14,15 @@ const SMSClient = require('@alicloud/sms-sdk');
 // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
 const accessKeyId = 'LTAIc4fl7xr9G8Un';
 const secretAccessKey = 'Es8cipUuolxlBmL2Jh5xRSJKtdCTW3';
+// 七牛云
+const qiniuAccessKey = 'foNZ5jdbJwZMMK68_zWupMM-fB7DztNkW2CEX0DI';
+const qiniuSecretAccessKey = '7nmUhCFtiY_BQzVJ4R4kkkMk4xAH1NOsvBOwVoG7';
+
 
 // 初始化sms_client
 let smsClient = new SMSClient({accessKeyId, secretAccessKey});
+// 初始化七牛mac
+var mac = new qiniu.auth.digest.Mac(qiniuAccessKey, qiniuSecretAccessKey);
 
 function createCode() {
     // 主要利用数学计算
@@ -68,7 +75,7 @@ let user = {
         }
     },
     login: async (body) => {
-        let sql = `select aid, phone, name, password, intro, site, age, avatar, repu 
+        let sql = `select aid, phone, name, password, intro, site, age, avatar, homeBanner, repu 
                 from userbaseinfo 
                 where phone = '${body.userPhone}';`;
         try {
@@ -85,7 +92,7 @@ let user = {
      * 获取用户信息
      */
     getUserInfoById: async (aid) => {
-        let sql = `select aid, phone, name, intro, site, age, avatar, repu 
+        let sql = `select aid, phone, name, intro, site, age, avatar, repu, homeBanner 
                 from userbaseinfo 
                 where aid = '${aid}';`;
         console.log(sql);
@@ -98,6 +105,17 @@ let user = {
             console.log(e);
             return false;
         }
+    },
+
+    getQiniuToken() {
+        let options = {
+            scope: 'airball',
+            // returnBody: '{"key":"$(key)","hash":"$(etag)","fsize":$(fsize),"bucket":"$(bucket)","name":"$(x:name)"}'
+        };
+        let putPolicy = new qiniu.rs.PutPolicy(options);
+        let uploadToken=putPolicy.uploadToken(mac);
+
+        return uploadToken;
     }
 };
 module.exports = user;

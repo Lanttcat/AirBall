@@ -176,6 +176,7 @@ route.post('/api/collection', async (ctx) => {
 // 步行街获取文章列表，根据uptime排序
 route.get('/api/allArticle', async (ctx) => {
     let lastTime = ctx.query.lastTime;
+    console.log('ddd')
     let res = await article.selectAllArticle(lastTime);
     ctx.response.type = 'json';
     ctx.response.body = {
@@ -235,7 +236,14 @@ route.get('/api/match', async (ctx) => {
     };
 });
 
-
-
-// 插入文章
+// 用户相关操作
+// 1. 获取用户上传图片token
+route.get('/api/qiniuToken', async (ctx) => {
+    // let days = ctx.query.days;
+    let res = await user.getQiniuToken();
+    ctx.response.type = 'json';
+    ctx.response.body = {
+        data: res
+    };
+});
 module.exports = route;

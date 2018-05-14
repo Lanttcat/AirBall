@@ -34,7 +34,7 @@ export let state = () => {
                 name: '我的主队',
                 icon: 'opacity',
                 route: {
-                    path: '/user/reputation'
+                    path: '/user/home-team'
                 }
             }
         ],

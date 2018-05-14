@@ -72,9 +72,10 @@ export function createApp() {
                 config.headers.Authorization = `Bearer ${token}`;
             }
             else {
+
                 router.replace({ //跳转到登录页面
                     path: 'login',
-                    query: { redirect: router.currentRoute.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
+                    query: { redirect: router.history.current.path || '/' } // 将跳转的路由path作为参数，登录成功后跳转到该路由
                 });
             }
             return config;
@@ -82,7 +83,7 @@ export function createApp() {
         err => {
             router.replace({ //跳转到登录页面
                 path: 'login',
-                query: { redirect: router.currentRoute.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
+                query: { redirect: router.history.current.path || '/' } // 将跳转的路由path作为参数，登录成功后跳转到该路由
             });
         }
     );
@@ -103,9 +104,10 @@ export function createApp() {
                         });
                 }
             }
-            return '认证失败'
+            return Promise.reject(error.response.data);
         }
     );
+
     let App = Vue.extend({
         router,
         store,

@@ -6,7 +6,7 @@ module.exports = (ctx, next) => {
         if (err.status === 401) {
             ctx.status = 401;
             ctx.body = {
-                data: [],
+                router: '/login',
                 error: err.originalError ? err.originalError.message : err.message
             };
         }

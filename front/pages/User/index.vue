@@ -8,7 +8,7 @@
                         <v-list>
                             <v-list-tile>
                                 <v-list-tile-avatar>
-                                     <img src="../../static/img/test_head.jpg">
+                                     <img :src="userInfo.avatar">
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
                                     <v-list-tile-title>{{ userInfo.name }}</v-list-tile-title>

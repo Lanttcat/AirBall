@@ -215,8 +215,9 @@ export default {
                         that.setMsgTip({msgSwitch: true, msgText: data.message});
 
                         // 跳转到之前的页面
-                        let AimPath = this.$route.query.redirect || '/';
-                        this.$router.push(AimPath);
+                        // let AimPath = this.$route.query.redirect || '/';
+                        // console.log(AimPath);
+                        this.$router.push('/');
                     }
                     else {
                         that.setMsgTip({msgSwitch: true, msgText: data.message});

@@ -112,8 +112,9 @@ export default {
                 this.storeMatchList(data.data);
                 this.matchList = data.data.slice(0, 4);
             }
-        }).catch(() => {
-            this.router.push('error');
+        }).catch((err) => {
+            console.log(err);
+            this.$router.replace(err.router || 'error');
         });
 
         // 加载文章列表
@@ -121,8 +122,8 @@ export default {
             if(data.data.data.length > 0) {
                 this.articleList = data.data.data;
             }
-        }).catch(() => {
-            this.router.push('error');
+        }).catch((err) => {
+            this.$router.replace(err.router || 'error');
         });
     },
     methods: {
