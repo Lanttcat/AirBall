@@ -156,6 +156,9 @@ export default {
         'comments': comments
     },
     methods: {
+        ...mapActions('userStatus/userStatu', [
+            'setUserInfo'
+        ]),
         upComment() {
             if (this.commentPublishFlag) {
                 this.dialog = true;

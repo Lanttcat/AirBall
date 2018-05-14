@@ -1,43 +1,48 @@
 <template>
     <v-layout row wrap>
         <v-flex xs12>
+            
             <v-card flat>
-                <v-card-media :src="info.imgSrc || '../../static/img/testimg/default.jpg'" height="200px">
+                <v-card-media
+                    @click.native.stop="uploadImageDialog = true"
+                    :src="userInfo.imgSrc || '../../static/img/testimg/default.jpg'" height="200px">
                 </v-card-media>
                 <v-card-title primary-title>
                     <div>
-                        <h3 class="headline mb-0">{{ info.title }}</h3>
+                        <h3 class="headline mb-0">{{ userInfo.title }}</h3>
                         <h3 class="headline mb-0">朱萧默说</h3>
                         <div>
-                            <span>声望</span>
-                            <span>222</span>
+                            <span>Air值</span>
+                            <span>{{ userInfo.repu | airValueFromat }}</span>
                         </div>
-                        <div>{{ info.intro }}</div>
+                        <div>
+                            <span>我的主队</span>
+                            <span>{{ userInfo.repu | airValueFromat }}</span>
+                        </div>
+                        <div>{{ userInfo.intro }}</div>
                     </div>
                 </v-card-title>
             </v-card>
-            <v-tabs
-                v-model=active
-                color='white'
-                fixed-tabs
-                slider-color=yellow>
-                <v-tab
-                    v-for='item in navs'
-                    :key='item'
-                    ripple>
-                    {{item}}
-                </v-tab>
-                <v-tab-item>
-                    <article-list :listArray='listArray'></article-list>
-                </v-tab-item>
-            </v-tabs>
-
         </v-flex>
+        <v-dialog v-model="uploadImageDialog" max-width="500px">
+            <v-card>
+                <v-card-title>
+                    上传背景图
+                </v-card-title>
+                <v-card-text>
+                    <input type="file">
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">取消</v-btn>
+                    <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">上传</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
    </v-layout>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import articleList from "@/components/ArticleList";
 function setState(store) {
     store.dispatch("appShell/appHeader/setAppHeader", {
         isShowHeader: false
@@ -51,57 +56,21 @@ export default {
     name: 'userHome',
     data() {
         return {
-            listArray: {},
-            active: null,
-            navs: ['文章', '评论'],
-            info: [],
-            content: '',
-            dialog: false
+            uploadImageDialog: false
         }
     },
     methods: {
-        upComment() {
-            this.dialog = true;
-        },
-        closeCard() {
-            this.dialog = false;
-        },
-        publish() {
-            // 验证信息
-        },
-        turnToAuther(auth) {
 
+    },
+    computed: {
+        ...mapState('userStatus/userStatu', [
+            'userInfo'
+        ])
+    },
+    filters: {
+        airValueFromat(value) {
+            return parseInt(value);
         }
-    },
-    components: {
-        'article-list': articleList
-    },
-    async asyncData({ store, route }) {
-        setState(store);
-    },
-    activated() {
-        setState(this.$store);
-    },
-    created() {
-        console.log(this.$route.query.id)
-        this.$http.get("/api/scenicspotList", {
-            params: {
-                id: this.$route.query.id
-            }
-        }).then(
-            ({data}) => {
-                console.log(data);
-                if (data.data.status) {
-                    this.info = data.data.data[0];
-                    console.log(this.status)
-                    console.log(data);
-                    // this.setMsgTip({msgSwitch: true, msgText: '验证码发送成功'});
-                }
-                else {
-                    // this.setMsgTip({msgSwitch: true, msgText: '获取列表失败'});
-                }
-            }
-        );
     }
 }
 </script>

@@ -12,7 +12,7 @@ import {createRouter} from '@/.lavas/router';
 import {createStore} from '@/.lavas/store';
 import AppComponent from './App.vue';
 import Vuetify from 'vuetify';
-import storage from '../lib/storage'
+import storage from '../lib/storage';
 import {ActionMonitor} from '../plugin/ActionMonitor';
 
 Vue.use(Meta);

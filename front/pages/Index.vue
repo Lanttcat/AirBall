@@ -89,10 +89,10 @@ export default {
     },
     metaInfo: {
         title: 'Home',
-        titleTemplate: '%s - Lavas',
+        titleTemplate: '%s - Airbal',
         meta: [
-            {name: 'keywords', content: 'lavas PWA'},
-            {name: 'description', content: '基于 Vue 的 PWA 解决方案，帮助开发者快速搭建 PWA 应用，解决接入 PWA 的各种问题'}
+            {name: 'keywords', content: 'Airbal篮球'},
+            {name: 'description', content: '篮球社区'}
         ]
     },
     async asyncData({store, route}) {
@@ -108,54 +108,29 @@ export default {
                 days: 3
             }
         }).then(({data}) => {
-            // console.log(data.data);
             if(data.data.length > 0) {
                 this.storeMatchList(data.data);
                 this.matchList = data.data.slice(0, 4);
-                console.log(this.matchList);
             }
         }).catch(() => {
-            console.log('ceshi')
+            this.router.push('error');
         });
-
 
         // 加载文章列表
         this.$http.get("/api/allArticle", {}).then(({data}) => {
-            console.log(data.data);
             if(data.data.data.length > 0) {
                 this.articleList = data.data.data;
-                console.log(this.articleList);
             }
         }).catch(() => {
-            console.log('ceshi')
+            this.router.push('error');
         });
     },
     methods: {
         ...mapMutations('match/list', [
             'storeMatchList'
         ]),
-        getSSList: () => {
-            this.$http.get("/api/scenicspot", {
-                params: {
-                    num: 3
-                }
-            }).then(
-                ({data}) => {
-                    console.log(data);
-                    if( data.status) {
-                        this.ssList = data.data;
-                        console.log(data);
-                        this.setMsgTip({msgSwitch: true, msgText: '验证码发送成功'});
-                    }
-                    else {
-                        this.setMsgTip({msgSwitch: true, msgText: '获取列表失败'});
-                    }
-                }
-            );
-        },
         TurnToArticle: function (id) {
             // 传递id，详情页通过id获取文章
-
             this.$router.push({
                 path: 'article',
                 query: {

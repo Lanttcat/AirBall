@@ -205,6 +205,22 @@ class Article {
 
         return result;
     }
+
+    /**
+     * 获取关注文章列表
+     * @param {String} articleId 
+     */
+    async searchLikeArticle(articleId) {
+
+    }
+
+    /**
+     * 获取用户发布过的文章
+     * @param {String} aid 
+     */
+    async searchUserOwnArticle(aid) {
+
+    }
     addZan() {
         // 增加点赞
     }

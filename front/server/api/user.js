@@ -81,6 +81,9 @@ let user = {
         }
     },
 
+    /**
+     * 获取用户信息
+     */
     getUserInfoById: async (aid) => {
         let sql = `select aid, phone, name, intro, site, age, avatar, repu 
                 from userbaseinfo 

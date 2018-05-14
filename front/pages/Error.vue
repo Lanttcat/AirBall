@@ -9,7 +9,7 @@ export default {
     name: 'error',
     computed: {
         message() {
-            return this.$route.params.error || 'Oops! Something is not quite right o(╥﹏╥)o';
+            return this.$route.params.error || '网络连接出现了问题~请检查网络设置(╥﹏╥)o';
         }
     },
     created() {

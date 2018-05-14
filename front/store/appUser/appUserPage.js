@@ -31,7 +31,7 @@ export let state = () => {
             },
             {
                 boxId: 4,
-                name: '声望',
+                name: '我的主队',
                 icon: 'opacity',
                 route: {
                     path: '/user/reputation'
@@ -50,9 +50,9 @@ export let state = () => {
             {
                 boxId: 2,
                 name: 'Air值',
-                icon: '',
+                icon: 'opacity',
                 route: {
-                    path: '/albums'
+                    path: '/user/reputation'
                 }
             },
             {
@@ -66,6 +66,14 @@ export let state = () => {
             {
                 boxId: 4,
                 name: '设置',
+                icon: 'settings',
+                route: {
+                    path: '/setting'
+                }
+            },
+            {
+                boxId: 5,
+                name: '意见反馈',
                 icon: 'settings',
                 route: {
                     path: '/setting'

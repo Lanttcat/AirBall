@@ -1,6 +1,8 @@
 /**
  * 用户状态
  */
+import axios from 'axios';
+import storage from '../../lib/storage';
 
 export let state = () => {
     return {
@@ -30,12 +32,35 @@ export const mutations = {
 export const actions = {
 
     /**
-     * 同步用户信息
+     * 同步用户信息,主要是用户解决用户二次进入的时候，没有存储用户信息
      *
      * @param {Function} commit commit
      * @param {Object} appHeader appHeader
      */
-    setUserInfo({commit}, userData) {
-        commit('syncUserInfo', userData);
+    setUserInfo({state, commit}) {
+        if (!state.userInfo.aid) {
+            
+            let token = storage.getItem('airball_token');
+            if (token) {
+                const options = {
+                    method: 'GET',
+                    headers: { 'Authorization': 'Bearer ' + token },
+                    url: '/api/userInfo',
+                };
+
+                axios(options).then(
+                    ({data}) => {
+                        if (data.status) {
+                            commit('syncUserInfo', data.userInfo);
+                        }
+                        else {
+                            // 暂时什么都不做
+                        }
+                    }
+                ).catch(() => {
+                    console.log('发生了错误')
+                });
+            }
+        }
     }
 };

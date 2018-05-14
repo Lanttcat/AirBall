@@ -10,7 +10,7 @@ import storage from '../lib/storage'
 
 export default function ({store, app, route}) {
     console.log(store);
-    if(!store.state.userStatus.userStatu.userInfo.aid) {
+    if (!store.state.userStatus.userStatu.userInfo.aid) {
             // 发送到服务器，token包含aid
         app.$http.get("/api/userInfo", {
             params: {}

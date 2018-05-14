@@ -11,12 +11,12 @@
                                      <img src="../../static/img/test_head.jpg">
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                    <v-list-tile-title>{{ userInfo.uname }}</v-list-tile-title>
-                                    <v-list-tile-sub-title>{{ userInfo.uIntro}}</v-list-tile-sub-title>
+                                    <v-list-tile-title>{{ userInfo.name }}</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{ userInfo.intro}}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
                                     <v-list-tile-title>
-                                        <v-list-tile-action-text>我的主页</v-list-tile-action-text>
+                                        <v-list-tile-action-text @click="toUserHome">我的主页</v-list-tile-action-text>
                                         <v-icon>navigate_next</v-icon>
                                     </v-list-tile-title>
                                 </v-list-tile-action>
@@ -25,29 +25,6 @@
                     </v-card>
                 </v-flex>
             </v-layout>
-            <!-- <v-layout row class="card-item">
-                <v-flex xs12>
-                    <v-card flat>
-                        <v-list>
-                            <v-list-tile>
-                                <v-list-tile-avatar>
-                                     <img src="../../static/img/test_head.jpg">
-                                </v-list-tile-avatar>
-                                <v-list-tile-content>
-                                    <v-list-tile-title>{{ userInfo.uname }}</v-list-tile-title>
-                                    <v-list-tile-sub-title>{{ userInfo.uIntro}}</v-list-tile-sub-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <v-list-tile-title>
-                                        <v-list-tile-action-text>我的主页</v-list-tile-action-text>
-                                        <v-icon>navigate_next</v-icon>
-                                    </v-list-tile-title>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                        </v-list>
-                    </v-card>
-                </v-flex>
-            </v-layout> -->
         </v-container>
         <v-container style="width:100%;padding:0;margin-top:1rem">
             <v-layout row wrap>
@@ -152,7 +129,7 @@ export default {
         {
             name: "description",
             content:
-            "旅行攻略，应有尽有"
+            ""
         }
         ]
     },
@@ -163,19 +140,14 @@ export default {
         setState(this.$store);
     },
     methods: {
-        toLogin() {
-            console.log(this.$router);
-            this.$router.replace('Login');
-
-            while(30) {
-                console.log("计算机冠军");
-            }
-        },
         turnToSubPage(id, route) {
             this.$router.push(route);
         },
         toRepu() {
             this.$router.push('repu');
+        },
+        toUserHome() {
+            this.$router.push('/user/user-home')
         }
     }
 };

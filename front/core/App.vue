@@ -58,10 +58,16 @@ export default {
         ArticleHeader,
         MsgTip
     },
+    mounted() {
+        setTimeout(() => {
+            this.setUserInfo();
+        }, 0);
+    },
     computed: {
         ...mapState('global', [
             'shellStyleConfig'
         ]),
+        // ...mapState('userStatus/userStatu',)
         ...mapState('pageTransition', {
             pageTransitionType: state => state.type,
             pageTransitionEffect: state => state.effect
@@ -84,6 +90,9 @@ export default {
         ...mapActions('appShell/appSidebar', [
             'showSidebar',
             'hideSidebar'
+        ]),
+        ...mapActions('userStatus/userStatu', [
+            'setUserInfo'
         ]),
         ...mapActions('appShell/common', [
             'setPageSwitching'
