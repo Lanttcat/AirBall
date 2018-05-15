@@ -7,13 +7,11 @@
             <v-flex xs8>
                 <div style="text-align: left">
                     <div class="subheading" @click="TurnToArticle(item._id)">{{ item.title }}</div>
-                        <v-chip outline color="red">
+                        <v-chip
+                            v-for="tag in item.tags" :key="tag.id"
+                            outline color="red">
                             <!-- <v-icon left>label</v-icon> -->
-                            去处
-                        </v-chip>
-                        <v-chip outline color="red">
-                            <!-- <v-icon left>label</v-icon> -->
-                            标签
+                            {{tag}}
                         </v-chip>
                     <div>
                         <span>{{ item.creatTime |  formatTime}}</span>

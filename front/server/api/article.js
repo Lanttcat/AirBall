@@ -235,6 +235,11 @@ class Article {
         })
     }
 
+    async searchArticleByTags(key) {
+        let res = await ArticleModel.find({tags: key}).sort({"updateTime": -1}).limit(5);
+        return res;
+    }
+
 }
 
 module.exports = Article;

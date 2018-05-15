@@ -9,11 +9,13 @@ let user = require('./api/user');
 let Article = require('./api/article');
 // let scenicspot = require('./api/scenicspot');
 let Match = require('./api/match.js');
+let Search = require('./api/search.js');
 const jwt = require('jsonwebtoken');
 
 let route = new Router();
 
 let article = new Article();
+let search = new Search();
 const secret = 'oneStep_secret';
 
 // 用户相关---------------------------------------------------------------------------
@@ -241,6 +243,19 @@ route.get('/api/match', async (ctx) => {
 route.get('/api/qiniuToken', async (ctx) => {
     // let days = ctx.query.days;
     let res = await user.getQiniuToken();
+    ctx.response.type = 'json';
+    ctx.response.body = {
+        data: res
+    };
+});
+
+
+// 搜索相关
+route.get('/api/search', async (ctx) => {
+    let key = ctx.query.key;
+    // console.log(ctx.state.user);
+    let res = await search.returnSearchValue(key);
+
     ctx.response.type = 'json';
     ctx.response.body = {
         data: res

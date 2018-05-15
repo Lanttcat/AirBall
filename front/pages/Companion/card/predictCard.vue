@@ -24,7 +24,7 @@
             </v-layout>
         </v-flex>
         <v-flex xs4 class="game-card-item">
-            <div>
+            <div v-if="!isSelect">
                 <p class="game-select" @click='gameProdict(true)'>
                     相信
                     <span v-if="matchInfo.syePro">(系统)</span>
@@ -32,6 +32,12 @@
                 <p class="game-select" @click='gameProdict(false)'>
                     不相信
                     <span v-if="!matchInfo.sysPro">(系统)</span>
+                </p>
+            </div>
+            <div v-else>
+                <p class="game-select" @click='gameProdict(true)'>
+                    已选择：{{}}
+                    <span v-if="matchInfo.syePro">()</span>
                 </p>
             </div>
         </v-flex>
@@ -54,7 +60,7 @@
                 <v-card-actions>
                     <v-btn flat left @click.stop="repuStart=false">关闭</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn flat right @click.stop="repuStart=false">确认</v-btn>
+                    <v-btn flat right @click.stop="sendRepuProdict">确认</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -68,19 +74,34 @@ export default {
     data() {
         return {
             repuStart: false,
-            repuValue: 10
-
+            repuValue: 10,
+            isSelect: false,
+            selectedText: ''
         }
     },
     methods: {
         gameProdict(isBelieve) {
             // select repu value
             this.repuStart = true;
+        },
+        sendRepuProdict() {
+             this.$http.put("/api/prodict", {
+                repu: this.repuValue
+            }).then(({data}) => {
+                    this.isSelect = true;
+                    this.selectedText = this.repuValue ? '相信' : '不相信';
+                }).catch((e) => {
+                    console.log(e);
+                    // 问题监控：log打点
+                    this.$router.push('error');
+                })
         }
     },
     filters: {
-        timeChange(time) {
-            return time;
+        timeChange(value) {
+            let time = new Date(value);
+            let formatTime = `${time.getFullYear()}.${time.getMonth()}.${time.getDay()}:${time.getHours()}点`;
+            return formatTime;
         }
     }
 }

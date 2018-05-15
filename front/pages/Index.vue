@@ -22,15 +22,11 @@
                         {{item.title}}
                     </div>
                     <v-chip
-                        outline
-                        color="red"
-                        @click="toSearch">
+                        v-for="tag in item.tags" :key="tag.id"
+                        outline color="red"
+                         @click="toSearch(tag)">
                         <!-- <v-icon left>label</v-icon> -->
-                        去处
-                    </v-chip>
-                    <v-chip outline color="red">
-                        <!-- <v-icon left>label</v-icon> -->
-                        标签
+                        {{tag}}
                     </v-chip>
                   </div>
                 </v-flex>

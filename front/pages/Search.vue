@@ -7,15 +7,80 @@
             <form @submit.prevent="search">
                 <input class="search-input" v-model="query" type="search" autocomplete="off" placeholder="请输入搜索词" autocapitalize="off" />
             </form>
-            <v-btn light icon class="search-btn" @click.native="query = ''">
+            <!-- <v-btn light icon class="search-btn" @click.native="query = ''">
                 <v-icon class="search-icon">close</v-icon>
+            </v-btn> -->
+            <v-btn light icon class="search-btn" @click="search">
+                <v-icon class="search-icon">search</v-icon>
             </v-btn>
         </header>
         <div v-if="loading" class="search-loading">
             <v-progress-circular indeterminate v-bind:size="70" class="primary--text"></v-progress-circular>
         </div>
-        <div v-if="data && data.length" class="search-content">
-            <v-list two-line>
+        <!-- 会有三种结果 球队 球员 文章 -->
+        <div v-if="data.player && data.player.length" class="search-content">
+            <v-card>
+                <v-layout row
+                    class="px-5"
+                    v-for="item in data.player" :key="item.id">
+                    <v-flex xs3>
+                        <v-avatar
+                            size="60px"
+                            class="pt-4"
+                            slot="activator">
+                            <img
+                                :src="item.avatar"
+                                alt="">
+                        </v-avatar>
+                    </v-flex>
+                    <v-flex xs9 class="palyer-info">
+                        <p><strong>{{ item.name }}</strong></p>
+                        <p>
+                            <span class="grey--text">号码：{{ item.player_number }}</span>
+                        </p>
+                        <p>
+                            <span class="grey--text">球队：{{ item.club_name }}</span>
+                        </p>
+                    </v-flex>
+                    
+                </v-layout>
+            </v-card>
+            <v-divider></v-divider>
+        </div>
+        <div v-if="data.team && data.team.length" class="search-content">
+            <v-card>
+                <v-container fluid grid-list-md>
+                    <v-layout row wrap>
+                        <v-flex
+                            v-for="card in data.team"
+                            xs6
+                            :key="card.club_id"
+                            >
+                            <v-card>
+                                <v-card-media
+                                    :src="card.logo"
+                                    height="100px"
+                                    >
+                                    <v-container fill-height fluid>
+                                        <v-layout fill-height>
+                                            <v-flex xs12 align-end flexbox>
+                                                <span class="headline white--text" v-text="card.title"></span>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-container>  
+                                </v-card-media>
+                                <v-card-text>
+                                    {{ card.name }}
+                                </v-card-text>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-card>
+        </div>
+        <div v-if="data.article && data.article.length" class="search-content">
+            <article-list :listArray = 'data.article'></article-list>
+            <!-- <v-list two-line>
                 <template v-for="(item, index) in data">
                     <v-list-tile avatar ripple v-bind:key="item.title">
                         <v-list-tile-content>
@@ -30,13 +95,14 @@
                     </v-list-tile>
                     <v-divider light v-if="index + 1 < data.length"></v-divider>
                 </template>
-            </v-list>
+            </v-list> -->
         </div>
     </div>
 </template>
 
 <script>
 import {mapActions} from 'vuex';
+import articleList from '@/components/ArticleList';
 
 let state = {
     appHeaderState: {
@@ -50,11 +116,11 @@ function setState(store) {
 export default {
     name: 'search',
     metaInfo: {
-        title: 'Search',
-        titleTemplate: '%s - Lavas',
+        title: '搜索',
+        titleTemplate: '%s - AirBall',
         meta: [
-            {name: 'keywords', content: 'lavas PWA'},
-            {name: 'description', content: '基于 Vue 的 PWA 解决方案，帮助开发者快速搭建 PWA 应用，解决接入 PWA 的各种问题'}
+            {name: 'keywords', content: '搜索'},
+            {name: 'description', content: ''}
         ]
     },
     data() {
@@ -66,10 +132,14 @@ export default {
         };
     },
     methods: {
-        async search_ceshi() {
+        search() {
 
             // 把数据清空
-            this.data = [];
+            this.data = {
+                team: [],
+                player: [],
+                article: []
+            };
 
             // 显示加载动画
             this.loading = true;
@@ -78,74 +148,54 @@ export default {
             this.$el.querySelector('.search-input').blur();
 
             // 等待 1s，模拟加载中的效果
-            await new Promise(resolve => {
-                setTimeout(resolve, 1000);
-            });
+            // await new Promise(resolve => {
+            //     setTimeout(resolve, 1000);
+            // });
 
-            // 设置搜索结果数据
-            this.data = [
-                {
-                    title: 'Ali Connors',
-                    headline: 'Brunch this weekend?',
-                    subtitle: 'I\'ll be in your neighborhood doing errands this weekend. Do you want to hang out?',
-                    action: '15 min'
-                },
-                {
-                    title: 'me, Scrott, Jennifer',
-                    headline: 'Summer BBQ',
-                    subtitle: 'Wish I could come, but I\'m out of town this weekend.',
-                    action: '2 hr'
-                },
-                {
-                    title: 'Sandra Adams',
-                    headline: 'Oui oui',
-                    subtitle: 'Do you have Paris recommendations? Have you ever been?',
-                    action: '6 hr'
-                },
-                {
-                    title: 'Trevor Hansen',
-                    headline: 'Birthday gift',
-                    subtitle: 'Have any ideas about what we should get Heidi for her birthday?',
-                    action: '12 hr'
-                },
-                {
-                    title: 'Britta Holt',
-                    headline: 'Recipe to try',
-                    subtitle: 'We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
-                    action: '18 hr'
+            // 获取搜索结果数据
+            this.$http.get("/api/search", {
+                params: {
+                    key: this.query
                 }
-            ];
-
-            this.loading = false;
+            }).then(({data}) => {
+                    if (data.data) {
+                        this.data = data.data;
+                        this.loading = false;
+                    }
+                }
+            )
         },
         
         /**
          * 搜索具体处理
          */
 
-        search(content, model) {
-            // ?content=科比&model=tag
-            // 清空data
-            this.data = [];
+        // search(content, model) {
+        //     // ?content=科比&model=tag
+        //     // 清空data
+        //     this.data = [];
 
-            this.model = model ? model : 'all';
+        //     this.model = model ? model : 'all';
 
-            this.$http.get("/api/search", {
-                params: {
-                    content: content,
-                    model: model
-                }
-            }).then(
+        //     this.$http.get("/api/search", {
+        //         params: {
+        //             content: content,
+        //             model: model
+        //         }
+        //     }).then(
                 
-            );
-        }
+        //     );
+        // }
     },
     async asyncData({store, route}) {
         setState(store);
     },
     activated() {
         setState(this.$store);
-    }
+    },
+    components: {
+        'article-list': articleList
+    },
 };
 </script>
 
