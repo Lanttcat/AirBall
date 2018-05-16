@@ -1,6 +1,6 @@
 <template>
     <div>
-        <player-title :titles="playerInfo.base_player_message"></player-title>
+        <player-title v-if='playerInfo' :titles="playerInfo.base_player_message"></player-title>
         <v-divider></v-divider>
         <v-tabs
             v-model="active"
@@ -16,6 +16,7 @@
             <!-- 资料 -->
             <v-tab-item>
                 <base-info 
+                    v-if='playerInfo'
                     :baseInfo="playerInfo.career_record" 
                     :baseAvData="[playerInfo.current_year_match_stat]">
                 </base-info>
@@ -23,13 +24,14 @@
             <!-- 数据 -->           
             <v-tab-item>
                 <data-info 
-                    :data='gameInfo.list'
+                    v-if="gameInfo"
+                    :data='gameInfo'
                     :cardTitle='cardTitle'>
                 </data-info>
             </v-tab-item>
             <!-- 新闻 -->
             <v-tab-item>
-                <article-card :articleListData=articleList></article-card>
+                <article-card v-if="articleList" :articleListData=articleList></article-card>
             </v-tab-item>
 
         </v-tabs>
@@ -37,8 +39,6 @@
     </div>
 </template>
 <script>
-import info from '../../../mock/playinfo.json';
-import gameInfo from '../../../mock/gameinfo.json';
 import playerTitle from './title.vue';
 import baseInfo from './baseInfo.vue';
 import dataInfo from './dataInfo.vue';
@@ -71,8 +71,8 @@ export default {
             active: null,
             navs: ['资料', '数据', '新闻'],
             cardTitle: '比赛数据',
-            playerInfo: info.data,
-            gameInfo: gameInfo.data,
+            playerInfo: null,
+            gameInfo: null,
             articleList: [
                 {
                     articleId: 11322424,
@@ -83,6 +83,20 @@ export default {
                     zanNumber: 222
                 }
             ]
+        }
+    },
+    async created() {
+        let id = this.$route.query.id || 168;
+        let url = `https://api-all.9h-sports.com/cba-data/api/cba/v1/league/player-history/${id}`;
+        let {data} = await  this.$http.get(url, {params: {}});
+
+        if (data.success) {
+            this.playerInfo = data.data;
+        }
+        let matchUrl = `https://api-all.9h-sports.com/cba-data/api/cba/v1/league/play-stats?player_id=${id}`;
+        let res = await this.$http.post(matchUrl, {"pageSize":0,"pageNo":0,"needPage":false})
+        if (res.data.success) {
+            this.gameInfo = res.data.data.list;
         }
     },
     components: {

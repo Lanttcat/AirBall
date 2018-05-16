@@ -10,12 +10,14 @@ let Article = require('./api/article');
 // let scenicspot = require('./api/scenicspot');
 let Match = require('./api/match.js');
 let Search = require('./api/search.js');
+let Prodict = require('./api/prodiction.js')
 const jwt = require('jsonwebtoken');
 
 let route = new Router();
 
 let article = new Article();
 let search = new Search();
+let prodict = new Prodict();
 const secret = 'oneStep_secret';
 
 // 用户相关---------------------------------------------------------------------------
@@ -175,6 +177,19 @@ route.post('/api/collection', async (ctx) => {
     };
 });
 
+// 获取收藏列表
+route.get('/api/collection', async (ctx) => {
+
+    let res = await article.selectCollectArticle(ctx.state.user.aid);
+
+    ctx.response.type = 'json';
+    ctx.response.body = {
+        msg: '获取收藏成功',
+        status: true,
+        data: res
+    };
+});
+
 // 步行街获取文章列表，根据uptime排序
 route.get('/api/allArticle', async (ctx) => {
     let lastTime = ctx.query.lastTime;
@@ -207,25 +222,7 @@ route.post('/api/comment', async (ctx) => {
     ctx.response.type = 'json';
     ctx.response.body = res;
 });
-// 获取景点
-// route.get('/api/scenicspot', async (ctx) => {
-//     let num = ctx.query.num;
-//     console.log(num);
-//     let res = await scenicspot.selectSomeScenicspot(num);
-//     ctx.response.type = 'json';
-//     ctx.response.body = {
-//         data: res
-//     };
-// });
-// route.get('/api/scenicspotList', async (ctx) => {
-//     let id = ctx.query.id;
-//     console.log(id);
-//     let res = await scenicspot.selectScenicspot(id);
-//     ctx.response.type = 'json';
-//     ctx.response.body = {
-//         data: res
-//     };
-// });
+
 // 比赛相关请求
 let match = new Match();
 route.get('/api/match', async (ctx) => {
@@ -261,4 +258,29 @@ route.get('/api/search', async (ctx) => {
         data: res
     };
 });
+
+// 预测操作
+route.post('/api/prodict', async (ctx) => {
+    let {body} = ctx.request;
+    console.log(body);
+    let aid = ctx.state.user.aid;
+    let res = await prodict.dict(body.gameid, aid, body.isBelieve, body.repu);
+    ctx.response.type = 'json';
+    ctx.response.body = {
+        data: res
+    };
+});
+
+// 获取用户预测列表
+route.get('/api/userProdict', async (ctx) => {
+    let res = await prodict.getUserProdict(ctx.state.user.aid);
+    ctx.response.type = 'json';
+    ctx.response.body = {
+        msg: '获取预测成功',
+        status: true,
+        data: res
+    };
+});
+
+
 module.exports = route;

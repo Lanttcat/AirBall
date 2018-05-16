@@ -23,10 +23,10 @@ export let state = () => {
             },
             {
                 boxId: 3,
-                name: '发起的讨论',
+                name: '预测',
                 icon: 'message',
                 route: {
-                    path: '/companion/'
+                    path: '/companion/prodict-list/'
                 }
             },
             {

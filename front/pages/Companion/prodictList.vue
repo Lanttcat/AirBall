@@ -2,8 +2,19 @@
     <v-layout row>
         <v-flex xs12>
             <sub-header :subHeaderData="settingListArray"></sub-header>
-            <article-card v-if="articleList" :articleListData="articleList"></article-card>
-            <p v-else class="heading">暂无收藏文章</p>
+            <v-list two-line v-if="prodictList">
+                <template v-for="(item, index) in prodictList">
+                    <v-subheader :key="item.id" class="py-1">
+                        {{item.roundName}}: {{ item.homeClubName }}-{{ item.guestClubName }}
+                    </v-subheader>
+                    <v-list-tile-title 
+                        style="text-align: right"
+                        class="px-4">声望：{{item.airValue}}</v-list-tile-title>
+                            <!-- <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title> -->
+                    <v-divider></v-divider>
+                </template>
+            </v-list>
+            <p v-else class="heading">暂无预测</p>
         </v-flex>
     </v-layout>
 </template>
@@ -21,20 +32,20 @@ function setState(store) {
     });
 }
 export default {
-    name: 'collection',
+    name: 'prodictList',
     data() {
         return {
             settingListArray: {
-                title: '我的收藏',
+                title: '我的预测',
                 leftIcon: 'arrow_back'
             },
-            articleList: []
+            prodictList: []
         }
     },
     async created() {
-        let res = await this.$http.get('/api/collection');
+        let res = await this.$http.get('/api/userProdict');
         if (res.data.status) {
-            this.articleList = res.data.data;
+            this.prodictList = res.data.data;
         }
     },
     computed: {

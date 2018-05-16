@@ -15,7 +15,7 @@
         </header>
         <p style="width: 80%; margin:0 auto;border-top:1px solid rgb(230, 230, 230"></p>
         <div class="local-hot">
-            <p>有2222人正在旅行</p>
+            <p>有2222人在分享</p>
         </div>
     </div>
 </template>

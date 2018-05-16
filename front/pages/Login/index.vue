@@ -189,6 +189,7 @@ export default {
                     }
                 }
             );
+            return;
         },
         userLoginControl() {
             let that = this;

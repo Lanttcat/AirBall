@@ -18,11 +18,13 @@
             <v-progress-circular indeterminate v-bind:size="70" class="primary--text"></v-progress-circular>
         </div>
         <!-- 会有三种结果 球队 球员 文章 -->
+
+        <!-- 球员 -->
         <div v-if="data.player && data.player.length" class="search-content">
             <v-card>
                 <v-layout row
                     class="px-5"
-                    v-for="item in data.player" :key="item.id">
+                    v-for="item in data.player" :key="item.id" @click='toPlayerPage(item.player_id)'>
                     <v-flex xs3>
                         <v-avatar
                             size="60px"
@@ -165,6 +167,15 @@ export default {
                 }
             )
         },
+
+        toPlayerPage(id) {
+            this.$router.push({
+                path: 'information',
+                query: {
+                        id: id
+                    }
+            })
+        }
         
         /**
          * 搜索具体处理

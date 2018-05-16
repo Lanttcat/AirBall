@@ -59,11 +59,9 @@ export default {
                 days: 3
             }
         }).then(({data}) => {
-            console.log(data.data);
             if(data.data.length > 0) {
                 // this.storeMatchList(data.data);
                 this.matchInfos = data.data;
-                console.log(this.matchInfos);
             }
         });
 

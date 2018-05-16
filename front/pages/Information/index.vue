@@ -8,7 +8,7 @@ import player from './player/index.vue'
 function setState(store) {
     store.dispatch('appShell/appHeader/setAppHeader', {
         isShowHeader: true,
-        title: '茶途',
+        title: '',
         isShowInputSearch: true,
         isShowBtnSearch: true,
         leftBtn: {

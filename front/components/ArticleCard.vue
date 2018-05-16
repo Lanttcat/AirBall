@@ -1,39 +1,42 @@
 <template>
     <v-container grid-list-md text-xs-center class="home-feed">
-        <v-layout
+        <div
             v-for="item in articleListData"
-            :key="item.articleId"
-            row
-            class="card-item">
-            <v-flex xs6>
-                <div style="text-align: left">
-                <div class="headline">{{ item.title }}</div>
-                <div class="headline-sub">{{ item.subtitle }}</div>
-                <v-chip
-                    v-for="tag in item.tags"
-                    :key="tag.id"
-                    outline
-                    class="item-tag"
-                    color="red">
-                    {{tag}}
-                </v-chip>
-                </div>
-            </v-flex>
-            <v-flex x6>
-                <img
-                    src="../static/img/testimg/1.jpg">
-                <div>
-                    <span>{{ item.browserNumber }}</span>
-                    <span>{{ item.zanNumber }}</span>
-                </div>
-            </v-flex>
-        </v-layout>
+            :key="item.id">
+            <v-layout row class="card-item">
+                <v-flex xs7>
+                    <div style="text-align: left">
+                        <div class="subheading">{{ item.name }}</div>
+                        <div class="subheading">作者：{{ item.author }}</div>
+                        <div class="subheading">时间：{{ item.createTime | timeTransform }}</div>
+                    </div>
+                </v-flex>
+                <v-flex x5>
+                    <img
+                        src="../static/img/testimg/1.jpg">
+                    <!-- <div>
+                        <span>{{ item.browserNumber }}</span>
+                        <span>{{ item.zanNumber }}</span>
+                    </div> -->
+                </v-flex>
+                
+            </v-layout>
+            <v-divider class="mb-2"></v-divider>
+        </div>
     </v-container>
 </template>
 <script>
 export default {
     name: 'article-card',
-    props: ['articleListData']
+    props: ['articleListData'],
+    filters: {
+        timeTransform(value) {
+            let time = new Date(value);
+            
+            let formatTime = `${time.getFullYear()}-${time.getMonth()}-${time.getDay()}:${time.getHours()}时`;
+            return formatTime;
+        }
+    }
 }
 </script>
 <style lang="stylus" scoped>
@@ -42,7 +45,7 @@ export default {
 
     .card-item
         padding 4px 0px 8px 0px
-        height 11rem
+        // height 10rem
         border-bottom 1px solid $colorBorder
         box-shadow none
 

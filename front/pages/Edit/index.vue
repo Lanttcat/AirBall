@@ -157,7 +157,7 @@ export default {
             this.tags = Array.from(set);
         },
         back() {
-            this.$router.go(-1);
+            this.$router.push('/');
         }
     },
     components: {

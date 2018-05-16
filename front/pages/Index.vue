@@ -28,6 +28,9 @@
                         <!-- <v-icon left>label</v-icon> -->
                         {{tag}}
                     </v-chip>
+                    <!-- <div>
+                        <span>1111收藏</span>
+                    </div> -->
                   </div>
                 </v-flex>
                 <v-flex xs5>
@@ -36,10 +39,6 @@
                       height="8rem"
                       contain
                     ></v-card-media>
-                    <div>
-                        <span>1111浏览</span>
-                        <span>161赞</span>
-                    </div>
                 </v-flex>
             </v-layout>
             </div>
@@ -162,7 +161,7 @@ export default {
 
     .card-item
         padding 4px 0px 8px 0px
-        height 11rem
+        // height 11rem
         border-bottom 1px solid $colorBorder
         box-shadow none
 
@@ -170,13 +169,13 @@ export default {
             padding 0.5rem
 
         .headline
-            height 5rem
+            // height 5rem
 
         .headline-sub
-            height 3rem
+            // height 3rem
 
         .item-tag
-            height 1.5rem
+            // height 1.5rem
 
         img
             height 8rem

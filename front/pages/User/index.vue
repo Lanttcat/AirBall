@@ -57,11 +57,11 @@
                 v-for="item in boxList2"
                 :key="item.id"
                 >
-                <v-card flat tile class="user-setting_item"
-                    @click="turnToSubPage(item.id, item.route)">
+                <v-card flat tile class="user-setting_item">
                     <v-flex full-height>
                         <v-btn
                             icon flat x-large
+                            @click="turnToSubPage(item.id, item.route)"
                             style="position: relativel;top:10px">
                             <v-icon class="app-header-icon">{{item.icon}}</v-icon>
                         </v-btn>
@@ -141,6 +141,7 @@ export default {
     },
     methods: {
         turnToSubPage(id, route) {
+            console.log(route);
             this.$router.push(route);
         },
         toRepu() {

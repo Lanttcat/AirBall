@@ -158,6 +158,16 @@ class Article {
 
     }
 
+    async selectCollectArticle(aid) {
+        let sql = `SELECT * from article_collect WHERE aid>='${aid}'`;
+        try {
+            let res = await query(sql);
+            return res;
+        }
+        catch (e) {
+            return false;
+        }
+    }
     selectComment(body) {
         // 读取评论
 

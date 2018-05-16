@@ -25,19 +25,18 @@
         </v-flex>
         <v-flex xs4 class="game-card-item">
             <div v-if="!isSelect">
-                <p class="game-select" @click='gameProdict(true)'>
+                <p class="game-select" @click='gameProdict(1)'>
                     相信
                     <span v-if="matchInfo.syePro">(系统)</span>
                 </p>
-                <p class="game-select" @click='gameProdict(false)'>
+                <p class="game-select" @click='gameProdict(0)'>
                     不相信
                     <span v-if="!matchInfo.sysPro">(系统)</span>
                 </p>
             </div>
             <div v-else>
-                <p class="game-select" @click='gameProdict(true)'>
-                    已选择：{{}}
-                    <span v-if="matchInfo.syePro">()</span>
+                <p class="game-select" style="line-height: 6rem">
+                    已选择:{{selectedText}}
                 </p>
             </div>
         </v-flex>
@@ -76,20 +75,26 @@ export default {
             repuStart: false,
             repuValue: 10,
             isSelect: false,
-            selectedText: ''
+            selectedText: '',
+            isBelieve: 0
         }
     },
     methods: {
         gameProdict(isBelieve) {
             // select repu value
+            this.isBelieve = isBelieve;
             this.repuStart = true;
         },
-        sendRepuProdict() {
-             this.$http.put("/api/prodict", {
-                repu: this.repuValue
+        sendRepuProdict(isBelieve, id) {
+            // 多一步Air余额验证
+            this.$http.post("/api/prodict", {
+                repu: this.repuValue,
+                isBelieve: this.isBelieve,
+                gameid: this.matchInfo.id
             }).then(({data}) => {
                     this.isSelect = true;
-                    this.selectedText = this.repuValue ? '相信' : '不相信';
+                    this.selectedText = this.isBelieve ? '相信' : '不相信';
+                    this.repuStart = false;
                 }).catch((e) => {
                     console.log(e);
                     // 问题监控：log打点
