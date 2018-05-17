@@ -229,7 +229,9 @@ class Article {
      * @param {String} aid 
      */
     async searchUserOwnArticle(aid) {
-
+        console.log(aid)
+        let res = await ArticleModel.find({authorId: aid}).sort({"updateTime": -1}).limit(5);
+        return res;
     }
     addZan() {
         // 增加点赞

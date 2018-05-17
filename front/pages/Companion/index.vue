@@ -3,7 +3,11 @@
         <!-- 预测列表 -->
         <v-layout row>
             <v-flex xs12>
-                <div class="subheading">神预测</div>
+                <v-subheader
+                    style="text-align: left"
+                    px-5 py-4>
+                    神预测 - <span class="yellow accent-4">规则说明</span>
+                </v-subheader>
                 <div v-for="item in matchInfos" :key="item.id">
 
                     <game-card :matchInfo="item" class="game-card-wrap"></game-card>

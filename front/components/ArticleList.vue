@@ -48,8 +48,9 @@ export default {
     },
     methods: {
         TurnToArticle(id) {
+            console.log(id)
             this.$router.push({
-                path: 'article',
+                path: '/article',
                 query: {
                     id: id
                 }

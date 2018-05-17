@@ -29,7 +29,7 @@ export const state = () => {
                 icon: '#icon-basketball-',
 
                 // 显示的文字
-                text: '办公',
+                text: '首页',
 
                 // 是否是当前激活的
                 active: true,
@@ -44,7 +44,7 @@ export const state = () => {
             {
                 name: 'information',
                 icon: '#icon-lanqiuchang',
-                text: '选秀',
+                text: '数据',
                 route: {
                     name: 'information',
                     path: '/information'
@@ -64,7 +64,7 @@ export const state = () => {
             {
                 name: 'companion',
                 icon: '#icon-tactics',
-                text: '控球',
+                text: '预测',
                 route: {
                     name: 'companion',
                     path: '/companion'

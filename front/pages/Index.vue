@@ -97,6 +97,13 @@ export default {
         setState(this.$store);
     },
     created() {
+        let flag = true;
+        function to() {
+            if (flag) {
+                this.$router.replace(err.router || 'error');
+            }
+            
+        }
         // 这里需要做个预处理：提前加载整个赛季的比赛列表
         this.$http.get("/api/match", {
             params: {
@@ -109,7 +116,7 @@ export default {
             }
         }).catch((err) => {
             console.log(err);
-            this.$router.replace(err.router || 'error');
+            to();
         });
 
         // 加载文章列表
@@ -118,8 +125,9 @@ export default {
                 this.articleList = data.data.data;
             }
         }).catch((err) => {
-            this.$router.replace(err.router || 'error');
+            to()
         });
+
     },
     methods: {
         ...mapMutations('match/list', [
@@ -128,7 +136,7 @@ export default {
         TurnToArticle: function (id) {
             // 传递id，详情页通过id获取文章
             this.$router.push({
-                path: 'article',
+                path: '/article',
                 query: {
                     id: id
                 }
@@ -137,8 +145,13 @@ export default {
         toStreet() {
             this.$router.push('/main/street');
         },
-        toSearch() {
-            this.$router.push('search')
+        toSearch(tag) {
+            this.$router.push({
+                path: '/search',
+                query: {
+                    key: tag
+                }
+            })
         }
     }
 };

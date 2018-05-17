@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="36402473-f3e7-4812-aa38-7ee7f6ee1180" name="Default" comment="" />
+    <list default="true" id="36402473-f3e7-4812-aa38-7ee7f6ee1180" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/components/ArticleList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/components/ArticleList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/data/cbaMatchInfo.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/data/cbaMatchInfo.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/Article/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/Article/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/Companion/card/predictCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/Companion/card/predictCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/Companion/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/Companion/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/Error.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/Error.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/Index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/Search.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/Search.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/Setting/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/Setting/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/User/articleList/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/User/articleList/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/User/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/User/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/User/reputation/card.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/User/reputation/card.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/pages/User/reputation/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/pages/User/reputation/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/server/api/article.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/server/api/article.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/server/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/server/api/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/server/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/store/appShell/appBottomNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/store/appShell/appBottomNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/store/appUser/appUserPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/store/appUser/appUserPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/store/global.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/store/global.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,12 +33,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="104" column="26" lean-forward="true" selection-start-line="104" selection-start-column="26" selection-end-line="104" selection-end-column="26" />
+            <state relative-caret-position="265">
+              <caret line="25" column="71" lean-forward="true" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="71" />
               <folding>
                 <element signature="e#23#42#0" expanded="true" />
               </folding>
@@ -23,27 +46,87 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="matchProdict.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/matchProdict.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="157" column="28" selection-start-line="157" selection-start-column="28" selection-end-line="157" selection-end-column="28" />
+              <folding>
+                <element signature="e#23#42#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="17-18match.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/17-18match.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="match_cba.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/match_cba.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1250">
+              <caret line="297" column="25" selection-start-line="297" selection-start-column="25" selection-end-line="297" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="16-17match.csv" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/res/16-17match.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="11" column="24" lean-forward="true" selection-end-line="381" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>logo</find>
+      <find>北京农商银行</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/res/cbaTeamAvarage.json" />
+        <option value="$PROJECT_DIR$/res/av_cba.csv" />
+        <option value="$PROJECT_DIR$/res/match_cba.csv" />
+        <option value="$PROJECT_DIR$/res/16-17match.csv" />
+        <option value="$PROJECT_DIR$/matchProdict.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="240" />
-    <option name="y" value="126" />
+    <option name="y" value="125" />
     <option name="width" value="1440" />
     <option name="height" value="765" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -51,10 +134,21 @@
               <item name="python" type="b2602c69:ProjectViewProjectNode" />
               <item name="python" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="python" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="python" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -73,7 +167,25 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.matchProdict">
+    <configuration name="matchProdict" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/matchProdict.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -92,8 +204,13 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <list>
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.matchProdict" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.matchProdict" />
         <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
@@ -113,25 +230,24 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18489583" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18489583" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" sideWeight="0.50065106" side_tool="true" weight="0.32965517" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49934897" visible="true" weight="0.32965517" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5052083" side_tool="true" visible="true" weight="0.32872927" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49479166" weight="0.32872927" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49934897" weight="0.32872927" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -140,11 +256,144 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="104" column="26" lean-forward="true" selection-start-line="104" selection-start-column="26" selection-end-line="104" selection-end-column="26" />
+        <state relative-caret-position="1444">
+          <caret line="82" column="26" selection-end-line="127" selection-end-column="86" />
           <folding>
             <element signature="e#23#42#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matchProdict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1406">
+          <caret line="80" column="22" lean-forward="true" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
+          <folding>
+            <element signature="e#23#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/myData.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/cbaTeamAvarage.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="836">
+          <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/match_cba.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="28" lean-forward="true" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1558">
+          <caret line="82" column="26" selection-end-line="127" selection-end-column="86" />
+          <folding>
+            <element signature="e#23#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matchProdict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1235">
+          <caret line="65" column="28" selection-start-line="65" selection-start-column="28" selection-end-line="65" selection-end-column="28" />
+          <folding>
+            <element signature="e#23#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+          <folding>
+            <element signature="e#23#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="6" lean-forward="true" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+          <folding>
+            <element signature="e#23#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/myData.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/cbaTeamAvarage.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="836">
+          <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/av_cba.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="13" column="277" selection-start-line="13" selection-start-column="277" selection-end-line="13" selection-end-column="277" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="25" column="71" lean-forward="true" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="71" />
+          <folding>
+            <element signature="e#23#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/match_cba.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1250">
+          <caret line="297" column="25" selection-start-line="297" selection-start-column="25" selection-end-line="297" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/17-18match.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matchProdict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="157" column="28" selection-start-line="157" selection-start-column="28" selection-end-line="157" selection-end-column="28" />
+          <folding>
+            <element signature="e#23#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/16-17match.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="24" lean-forward="true" selection-end-line="381" />
         </state>
       </provider>
     </entry>

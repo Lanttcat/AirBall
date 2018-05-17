@@ -41,6 +41,23 @@ route.get('/api/user', async (ctx) => {
     }
 });
 
+route.get('/api/setting', async (ctx) => {
+    // 验证码
+    let type = ctx.query.type;
+    let value = ctx.query.value;
+    try {
+        let res = await user.userSetting(ctx.state.user.aid, type, value);
+
+        ctx.response.type = 'json';
+        ctx.response.body = {
+            data: res
+        };
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
 // 注册
 route.post('/api/user', async (ctx) => {
     const {body} = ctx.request;
@@ -141,21 +158,6 @@ route.get('/api/userInfo', async (ctx) => {
 
 // 文章相关------------------------------------------------------------------------
 
-// route.post('/api/comment', async (ctx) => {
-//     let commentInfo = {};
-//     let {body} = ctx.request;
-//     commentInfo.userId = body.userId;
-//     commentInfo.content = body.content;
-//     commentInfo.parentNodeId = body.parentNodeId;
-
-//     let res = await article.addComment(body.articleId, commentInfo);
-//     console.log(res);
-//     ctx.response.type = 'json';
-//     ctx.response.body = {
-//         data: res
-//     };
-// });
-
 // 存文章
 route.post('/api/article', async (ctx) => {
     let {body} = ctx.request;
@@ -195,6 +197,16 @@ route.get('/api/allArticle', async (ctx) => {
     let lastTime = ctx.query.lastTime;
     console.log('ddd')
     let res = await article.selectAllArticle(lastTime);
+    ctx.response.type = 'json';
+    ctx.response.body = {
+        data: res
+    };
+});
+
+// 获取用户自己发布的文章
+route.get('/api/userOwnArticle', async (ctx) => {
+
+    let res = await article.searchUserOwnArticle(ctx.state.user.aid);
     ctx.response.type = 'json';
     ctx.response.body = {
         data: res

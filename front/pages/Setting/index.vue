@@ -11,7 +11,7 @@
                 <v-list two-line subheader>
                     <v-subheader>账户</v-subheader>
                     <v-list-tile avatar>
-                        <v-list-tile-content>
+                        <v-list-tile-content @click="openUploadImageDialog">
                             <v-list-tile-title>头像上传</v-list-tile-title>
                             <!-- <v-list-tile-sub-title>Change your Google+ profile photo</v-list-tile-sub-title> -->
                         </v-list-tile-content>
@@ -22,7 +22,7 @@
                         </v-list-tile-content>
                         <v-spacer></v-spacer>
                         <v-list-tile-content>
-                            <v-list-tile-sub-title>朱萧默说</v-list-tile-sub-title>
+                            <v-list-tile-sub-title>{{userInfo.name}}</v-list-tile-sub-title>
                         </v-list-tile-content>
                     </v-list-tile>
                     <v-list-tile avatar>
@@ -42,12 +42,12 @@
                         </v-list-tile-content>    
                     </v-list-tile>
                     <v-list-tile avatar>
-                        <v-list-tile-content  @click="openInputCard('localtion')">
+                        <v-list-tile-content  @click="openInputCard('site')">
                             <v-list-tile-title>所在地</v-list-tile-title>
                         </v-list-tile-content>
                         <v-spacer></v-spacer>
                         <v-list-tile-content>
-                            <v-list-tile-sub-title>山东省济南市</v-list-tile-sub-title>
+                            <v-list-tile-sub-title>{{userInfo.site || '暂无'}}</v-list-tile-sub-title>
                         </v-list-tile-content>
                     </v-list-tile>
                 </v-list>
@@ -72,38 +72,63 @@
         </v-flex>
 
         <v-bottom-sheet v-model="dialog">
-                <v-card tile>
-                    <v-toolbar card>
-                        <v-toolbar-title>{{activeLabel}}</v-toolbar-title>
-                        <v-spacer></v-spacer>
-                        <v-btn icon @click="closeCard">
-                            <v-icon>close</v-icon>
-                        </v-btn>
-                        
-                    </v-toolbar>
-                    <v-layout class="comment-input">
-                        
-                        <v-flex xs10 offset-xs1>
-                            <v-text-field
-                                box
-                                auto-grow
-                                name=""
-                                color="light-green accent-4"
-                                v-model="userSetting.name "
-                                counter='20'
-                            ></v-text-field>
-                            <div>
-                                <v-btn depressed large color="error" @click="clearLoginStatus">保存</v-btn>
-                                <br>
-                            </div>
-                        </v-flex>
-                    </v-layout>
-                </v-card>
-            </v-bottom-sheet>
+            <v-card tile>
+                <v-toolbar card>
+                    <v-toolbar-title>{{activeLabel}}</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="closeCard">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    
+                </v-toolbar>
+                <v-layout class="comment-input">
+                    
+                    <v-flex xs10 offset-xs1>
+                        <v-text-field
+                            box
+                            auto-grow
+                            name=""
+                            color="light-green accent-4"
+                            v-model="content"
+                            counter='20'
+                        ></v-text-field>
+                        <div>
+                            <v-btn depressed large color="error" @click="saveSetting">保存</v-btn>
+                            <br>
+                        </div>
+                    </v-flex>
+                </v-layout>
+            </v-card>
+        </v-bottom-sheet>
+        <v-dialog v-model="uploadImageDialog" max-width="500px">
+            <v-card>
+                <v-card-title>
+                    上传背景图
+                </v-card-title>
+                <v-card-text>
+                    <!-- <input type="file"> -->
+                    <vue-file-upload
+                        ref="vueFileUploader"
+                        :filters='filters'
+                        url='http://upload.qiniup.com'
+                        :events='cbEvents'
+                        :request-options='reqopts'
+                        v-on:onAdd = "onAddItem">
+                        <span slot="label">上传文件</span>
+                    </vue-file-upload>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="green darken-1" flat="flat" @click.native="uploadImageDialog = false">取消</v-btn>
+                    <v-btn color="green darken-1" flat="flat" @click="uploadItem(file)">上传</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-layout>
 </template>
 <script>
-import { mapState } from 'vuex';
+import VueFileUpload from 'vue-file-upload';
+import { mapState, mapActions} from 'vuex';
 import subHeader from '@/components/SubHeader';
 import storage from '../../lib/storage.js';
 function setState(store) {
@@ -122,6 +147,7 @@ export default {
                 title: '设置',
                 leftIcon: 'arrow_back'
             },
+            inputType: '',
             activeLabel: '',
             sexRadio: '男',
             sexSelect: ['男', '女'],
@@ -129,7 +155,38 @@ export default {
             userSetting: {
                 name: '',
                 sex: 1
+            },
+            content: '',
+            
+            file: null,
+            uploadImageDialog: false,
+            imgUploadUrl: 'www',
+            filters: [
+                {
+                    name: 'imageType',
+                    fn(file){
+                        var type = '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
+                        return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+                    }
+                }
+            ],
+            //回调函数绑定
+            cbEvents:{
+                onCompleteUpload: (file,response,status,header)=>{
+                    this.userInfo.imgSrc = 'http://p8p6o46oy.bkt.clouddn.com/' + response.key;
+                    this.uploadImageDialog = false;
+                }
+            },
+            //xhr请求附带参数
+            reqopts:{
+                formData:{
+                    action: 'http://upload.qiniup.com',
+                    key: '',
+                    token: '',
+                    file: ''
+                }
             }
+
         }
     },
     async asyncData({store, route}) {
@@ -139,6 +196,12 @@ export default {
         setState(this.$store);
     },
     methods: {
+        ...mapActions('userStatus/userStatu', [
+            'setUserInfo'
+        ]),
+        openUploadImageDialog() {
+            this.uploadImageDialog = true;
+        },
         settingItem () {
             console.log('te');
         },
@@ -151,6 +214,22 @@ export default {
             storage.removeItem('airball_time');
             this.$router.replace('user');
         },
+        async saveSetting() {
+            let res = await this.$http.get('/api/setting',{
+                params: {
+                    type: this.inputType,
+                    value: this.content
+                }
+            });
+            console.log(res);
+            if (res.data) {
+                this.userInfo[this.inputType] = this.content;
+                console.log(this.userInfo)
+                this.setUserInfo(this.userInfo);
+                this.dialog = false;
+                this.content = '';
+            }
+        },
         goback() {
             this.$router.go(-1);
         },
@@ -159,23 +238,44 @@ export default {
                 name: '请输入用户名',
                 localtion: '请输入地址',
             }
+
+            this.inputType = type;
             
             this.activeLabel = label[type];
             this.dialog = true;
         },
-        saveSetting() {
-
-        },
         closeCard() {
             this.dialog = false;
+        },
+        uploadItem(file){
+            //单个文件上传
+            let fileItem = file[0];
+            this.$http.get("/api/qiniuToken", {}).then(({data}) => {
+                console.log(data);
+                this.reqopts.formData.key = `${this.userInfo.aid}_user_avatar`;
+                this.reqopts.formData.token = data.data;
+                this.reqopts.formData.file = fileItem;
+                fileItem.upload();
+            }).catch(() => {
+                this.$router.push('error');
+            });
+        },
+        onAddItem(file){
+            this.file = file;
         }
     },
     
     computed: {
         ...mapState('appSetting/appSettingList', [
             'settingList'
+        ]),
+        ...mapState('userStatus/userStatu', [
+            'userInfo'
         ])
     },
+    components:{
+        VueFileUpload
+    }
   }
 </script>
 <style lang="stylus" scoped>

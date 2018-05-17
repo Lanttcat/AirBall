@@ -82,22 +82,6 @@
         </div>
         <div v-if="data.article && data.article.length" class="search-content">
             <article-list :listArray = 'data.article'></article-list>
-            <!-- <v-list two-line>
-                <template v-for="(item, index) in data">
-                    <v-list-tile avatar ripple v-bind:key="item.title">
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                            <v-list-tile-sub-title class="grey--text text--darken-4">{{ item.headline }}</v-list-tile-sub-title>
-                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
-                            <v-icon class="grey--text text--lighten-1">star_border</v-icon>
-                        </v-list-tile-action>
-                    </v-list-tile>
-                    <v-divider light v-if="index + 1 < data.length"></v-divider>
-                </template>
-            </v-list> -->
         </div>
     </div>
 </template>
@@ -133,8 +117,14 @@ export default {
             model: ''
         };
     },
+    created() {
+        let key = this.$route.query.key;
+    
+        this.query = key;
+        this.search(key);
+    },
     methods: {
-        search() {
+        search(key) {
 
             // 把数据清空
             this.data = {
@@ -147,7 +137,7 @@ export default {
             this.loading = true;
 
             // 让当前输入框失去焦点
-            this.$el.querySelector('.search-input').blur();
+            // this.$el.querySelector('.search-input').blur();
 
             // 等待 1s，模拟加载中的效果
             // await new Promise(resolve => {
@@ -157,7 +147,7 @@ export default {
             // 获取搜索结果数据
             this.$http.get("/api/search", {
                 params: {
-                    key: this.query
+                    key: key || this.query
                 }
             }).then(({data}) => {
                     if (data.data) {

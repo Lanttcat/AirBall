@@ -68,6 +68,10 @@ export const state = () => {
             'search': {
                 header: 3,
                 footer: 3
+            },
+            'userReputation': {
+                header: 3,
+                footer: 3
             }
         }
     };

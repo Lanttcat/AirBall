@@ -16,8 +16,8 @@
                 </v-card-title>
                 <v-card-title primary-title>
                     <div v-if="info.content">
-                        <p>
-                            {{info.content}}
+                        <p v-html="info.content">
+
                         </p>
                     </div>
                     <div v-else>
@@ -182,11 +182,7 @@ export default {
             if (this.content > 255) {
                 this.commentWarning = warningTxt[1];
             }
-            
-            // 发送到服务器
-            this.$http.post("/api/comment", {
-                id: this.info._id,   // 文章id
-                commentInfo: {
+            let commentInfo = {
                     userId: this.userInfo.aid,
                     userV: '',
                     userName: this.userInfo.name,
@@ -194,11 +190,18 @@ export default {
                     parentNodeName: '',
                     content: this.content,
                     zanCount: 0
-                }
+                };
+            // 发送到服务器
+            this.$http.post("/api/comment", {
+                id: this.info._id,   // 文章id
+                commentInfo: commentInfo
             }).then(
                 ({data}) => {
                     console.log(data);
                     if (data.status) {
+                        console.log(data)
+                        this.dialog = false;
+                        this.comments.push(commentInfo);
                     }
                     else {
                         this.commentWarning = warningTxt[2];

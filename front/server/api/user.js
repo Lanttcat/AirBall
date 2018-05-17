@@ -116,6 +116,19 @@ let user = {
         let uploadToken=putPolicy.uploadToken(mac);
 
         return uploadToken;
+    },
+
+    userSetting: async (aid, type, value) => {
+        let sql = `UPDATE userbaseinfo SET ${type}='${value}' WHERE aid='${aid}';`;
+        console.log(sql);
+        try {
+            let res = await query(sql);
+            return res;
+        }
+        catch (e) {
+            console.log(e);
+            return false;
+        }
     }
 };
 module.exports = user;

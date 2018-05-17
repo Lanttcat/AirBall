@@ -5,7 +5,7 @@
         <v-container fill-height>
         <v-layout align-center>
             <v-flex text-xs-center>
-            <h4 class="display-2">5553</h4>
+            <h4 class="display-2">{{parseInt(airValue)}}</h4>
             <h5 class="display-1">普普通通</h5>
             </v-flex>
         </v-layout>
@@ -14,6 +14,7 @@
 </template>
 <script>
 export default {
+    props: ['airValue'],
     name: 'repu-card'
 }
 </script>

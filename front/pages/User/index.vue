@@ -8,7 +8,7 @@
                         <v-list>
                             <v-list-tile>
                                 <v-list-tile-avatar>
-                                     <img :src="userInfo.avatar">
+                                     <img :src="userInfo.aid | userAvatar">
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
                                     <v-list-tile-title>{{ userInfo.name }}</v-list-tile-title>
@@ -149,6 +149,12 @@ export default {
         },
         toUserHome() {
             this.$router.push('/user/user-home')
+        }
+    },
+    filters: {
+        userAvatar(value) {
+            let url = `http://p8p6o46oy.bkt.clouddn.com/${value}_user_avatar`;
+            return url;
         }
     }
 };

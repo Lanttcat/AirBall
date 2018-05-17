@@ -9,24 +9,15 @@ from sklearn.model_selection import cross_val_score
 
 # 当每支队伍没有elo等级分时，赋予其基础elo等级分
 base_elo = 1600
-team_elos = {} 
+team_elos = {}
 team_stats = {}
 X = []
 y = []
 folder = './data/data' #存放数据的目录
 
-def initialize_data(Mstat, Ostat, Tstat):
-    new_Mstat = Mstat.drop(['Rk', 'Arena'], axis=1)
-    # print(new_Mstat)
-    new_Ostat = Ostat.drop(['Rk', 'G', 'MP'], axis=1)
-    # print(new_Ostat);
-    new_Tstat = Tstat.drop(['Rk', 'G', 'MP'], axis=1)
-    # print(new_Tstat)
+def initialize_data(AvStat):
 
-    team_stats1 = pd.merge(new_Mstat, new_Ostat, how='left', on='Team')
-    # print(team_stats1)
-    team_stats1 = pd.merge(team_stats1, new_Tstat, how='left', on='Team')
-    return team_stats1.set_index('Team', inplace=False, drop=True)
+    return AvStat.set_index('name', inplace=False, drop=True)
 
 def get_elo(team):
     try:
@@ -106,15 +97,31 @@ def build_dataSet(all_data):
 
     return np.nan_to_num(X), y
 
+# 对一场新的比赛进行预测
+def predict_winner(team_1, team_2, model):
+    features = []
+
+    # team 1，客场队伍
+    features.append(get_elo(team_1))
+    for key, value in team_stats.loc[team_1].iteritems():
+        features.append(value)
+
+    # team 2，主场队伍
+    features.append(get_elo(team_2) + 100)
+    for key, value in team_stats.loc[team_2].iteritems():
+        features.append(value)
+
+    features = np.nan_to_num(features)
+    return model.predict_proba([features])
+
+
 if __name__ == '__main__':
 
-    Mstat = pd.read_csv(folder + '/15-16Miscellaneous_Stat.csv')
-    Ostat = pd.read_csv(folder + '/15-16Opponent_Per_Game_Stat.csv')
-    Tstat = pd.read_csv(folder + '/15-16Team_Per_Game_Stat.csv')
+    AvStat = pd.read_csv('./res/av_cba.csv')
 
-    team_stats = initialize_data(Mstat, Ostat, Tstat)
+    team_stats = initialize_data(AvStat)
 
-    result_data = pd.read_csv(folder + '/2015-2016_result.csv')
+    result_data = pd.read_csv('./res/match_cba.csv')
     X, y = build_dataSet(result_data)
 
     # 训练网络模型
@@ -126,3 +133,28 @@ if __name__ == '__main__':
     #利用10折交叉验证计算训练正确率
     print("Doing cross-validation..")
     print(cross_val_score(model, X, y, cv = 10, scoring='accuracy', n_jobs=-1).mean())
+
+    # 预测所有比赛
+    print('Predicting on new schedule..')
+    schedule1617 = pd.read_csv('./res/16-17match.csv')
+    result = []
+    for index, row in schedule1617.iterrows():
+        matchId = row['id']
+        team1 = row['homeClubName']
+        team2 = row['guestClubName']
+        pred = predict_winner(team1, team2, model)
+        prob = pred[0][0]
+        if prob > 0.5:
+            winner = team1
+            loser = team2
+            result.append([matchId, winner, loser, prob])
+        else:
+            winner = team2
+            loser = team1
+            result.append([matchId, winner, loser, 1 - prob])
+
+    with open('./res/17-18match.csv', 'w', encoding='utf_8_sig') as f:
+        writer = csv.writer(f)
+        writer.writerow(['id','win', 'lose', 'probability'])
+        writer.writerows(result)
+        print('done.')

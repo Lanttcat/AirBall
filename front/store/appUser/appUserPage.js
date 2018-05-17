@@ -7,7 +7,7 @@ export let state = () => {
         boxList1: [
             {
                 boxId: 1,
-                name: '关注',
+                name: '收藏',
                 icon: 'star',
                 route: {
                     path: '/collection'
@@ -18,7 +18,7 @@ export let state = () => {
                 name: '我的文章',
                 icon: 'library_books',
                 route: {
-                    path: '/user/articleList'
+                    path: '/user/article-list'
                 }
             },
             {

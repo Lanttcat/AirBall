@@ -26,11 +26,11 @@
         <v-flex xs4 class="game-card-item">
             <div v-if="!isSelect">
                 <p class="game-select" @click='gameProdict(1)'>
-                    相信
+                    主队赢
                     <span v-if="matchInfo.syePro">(系统)</span>
                 </p>
                 <p class="game-select" @click='gameProdict(0)'>
-                    不相信
+                    客队赢
                     <span v-if="!matchInfo.sysPro">(系统)</span>
                 </p>
             </div>
@@ -44,7 +44,7 @@
         <v-dialog v-model='repuStart' max-width='450px'>
             <v-card>
                 <v-card-title>
-                    选择声望
+                    选择声望(Air币)
                 </v-card-title>
                 <v-card-actions>
                     <v-slider
@@ -55,6 +55,9 @@
                         min='10'>
                     </v-slider>
 
+                </v-card-actions>
+                <v-card-actions class="px-4">
+                    <span @click="toAir" class="red--text">Air币说明</span>
                 </v-card-actions>
                 <v-card-actions>
                     <v-btn flat left @click.stop="repuStart=false">关闭</v-btn>
@@ -93,13 +96,17 @@ export default {
                 gameid: this.matchInfo.id
             }).then(({data}) => {
                     this.isSelect = true;
-                    this.selectedText = this.isBelieve ? '相信' : '不相信';
+                    this.selectedText = this.isBelieve ? '主队赢' : '客队赢';
                     this.repuStart = false;
                 }).catch((e) => {
                     console.log(e);
                     // 问题监控：log打点
                     this.$router.push('error');
                 })
+        },
+        toAir() {
+            console.log(this.$router)
+            this.$router.push('/user/reputation')
         }
     },
     filters: {
